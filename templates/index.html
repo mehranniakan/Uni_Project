@@ -1,0 +1,561 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load sign_tags %}
+
+{% block content %}
+
+<section class="px-4">
+    <div class="container mx-auto max-w-screen-2xl">
+        <div class="relative">
+            <div class="h-96 bg-no-repeat rounded-bl-3xl"
+                 style="background-image: {% static 'images/home-bg.png' %}">
+                <div class="bg-gradient-to-r from-sky-600 to-indigo-600 opacity-80 rounded-br-3xl rounded-bl-3xl">
+                    <div class="flex flex-col items-center justify-center p-4 text-white leading-10 h-96 mb-10"
+                         style="background-image: {% static 'images/noise.png' %}">
+                        <div id="typed-strings">
+                            <p>کلینیک تخصصی و فوق تخصصی</p>
+                        </div>
+
+                        <h2 class="text-2xl md:text-3xl font-YekanBakh-ExtraBold text-center"><span
+                                id="typed"></span>
+                        </h2>
+                        <p class="mt-4 text-sm md:text-base text-center">ویزیت؛ نوبت‌دهی اینترنتی و مشاوره آنلاین
+                            پزشکان
+                            ایران</p>
+                        <div class="relative w-72 lg:w-1/3 my-4">
+                            <form method="get" action={%  url 'doctor_list_pub'  %}?id={{ item.0|sign }}>
+                            <input class="input input-bordered w-full text-sm text-stone-600" name="q" placeholder="نام پزشک و..."
+                                   type="text"/>
+                            <button class="btn btn-primary absolute top-0 left-0 rounded-r-none" type="submit">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                </svg>
+
+                            </button>
+                            </form>
+                        </div>
+                        <p class="mt-4 text-sm md:text-base text-center leading-8">تا این لحظه از +1,200 شهر و
+                            روستا، از
+                            +27,100 پزشک ویزیت دریافت شده</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="px-6 my-20">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center">
+                <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-YekanBakh-ExtraBold mr-2">تخصص های پرکاربرد</h2>
+            </div>
+            <div>
+                <a class="flex items-center gap-2" href="#">
+                    <span>مشاهده همه</span>
+                    <span><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                          </svg>
+                          </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="swiper cat-slider">
+            <div class="swiper-wrapper ease-linear">
+                {% for item in items %}
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-3xl leading-10">
+                        <a class="flex flex-col items-center justify-center p-4"
+                           href="{% url 'doctor_list_pub' %}?id={{ item.0|sign }}">
+                            <img alt="" class="w-20 mb-4" src="{% static 'images/ca-10.png' %}">
+                            <h3 class="font-YekanBakh-Bold text-base">{{ item.1 }}</h3>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</section>
+
+{% if top_docs %}
+<section class="px-6 my-24">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center">
+                <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-YekanBakh-ExtraBold mr-2">پزشکان برتر</h2>
+            </div>
+            <div>
+                <a class="flex items-center gap-2" href="#">
+                    <span>مشاهده همه</span>
+                    <span><svg class="w-6 h-6" fill="none" stroke="currentColor"
+                               stroke-width="1.5"
+                               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                          </svg>
+                          </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="swiper doctor-slider">
+            <div class="swiper-wrapper">
+                {% for item in top_docs %}
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-3xl leading-10">
+                        <div class="flex flex-col items-center justify-center p-4">
+                            <div class="avatar online">
+                                <div class="w-20 rounded-full">
+                                    <img src="{{ item.doctor.pic.url }}"/>
+                                </div>
+                            </div>
+                            <h3 class="font-YekanBakh-ExtraBold mt-4 text-base">{{ item.first_name }} {{ item.last_name
+                                }}</h3>
+                            <p>{% if item.doctor.speciality %}
+                                {{ item.doctor.speciality }} {% elif item.doctor.super_speciality %}
+                                {{ item.doctor.super_speciality }} {% else %}
+                                {{ item.doctor.clinic.name }} {% endif %}</p>
+                            <div class="text-yellow-500 flex mt-2">
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+
+                            </div>
+                            <a class="border hover:bg-amber-100 hover:transition hover:duration-700 p-1 w-full mt-4 text-center rounded-xl"
+                               href="main/doctor_detail.html">دریافت
+                                مشاوره</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+{% if pop_docs %}
+<section class="px-6 my-24">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center">
+                <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-YekanBakh-ExtraBold mr-2">محبوب ترین پزشکان</h2>
+            </div>
+            <div>
+                <a class="flex items-center gap-2" href="#">
+                    <span>مشاهده همه</span>
+                    <span><svg class="w-6 h-6" fill="none" stroke="currentColor"
+                               stroke-width="1.5"
+                               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                        </svg>
+                        </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="swiper doctor-slider">
+            <div class="swiper-wrapper">
+                {% for item in pop_docs %}
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-3xl leading-10">
+                        <div class="flex flex-col items-center justify-center p-4">
+                            <div class="avatar online">
+                                <div class="w-20 rounded-full">
+                                    <img src="{{ item.doctor.pic.url }}"/>
+                                </div>
+                            </div>
+                            <h3 class="font-YekanBakh-ExtraBold mt-4 text-base">{{ item.first_name }} {{ item.last_name
+                                }}</h3>
+                            <p>{% if item.doctor.speciality %}
+                                {{ item.doctor.speciality }} {% elif item.doctor.super_speciality %}
+                                {{ item.doctor.super_speciality }} {% else %}
+                                {{ item.doctor.clinic.name }} {% endif %}</p>
+                            <div class="text-yellow-500 flex mt-2">
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+                                <svg class="w-5 h-5" fill="currentColor"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                          fill-rule="evenodd"></path>
+                                </svg>
+
+                            </div>
+                            <a class="border hover:bg-amber-100 hover:transition hover:duration-700 p-1 w-full mt-4 text-center rounded-xl"
+                               href="main/doctor_detail.html">دریافت
+                                مشاوره</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+<section class="px-6 my-24">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center">
+                <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-YekanBakh-ExtraBold mr-2">خودت و بیمه کن !!</h2>
+            </div>
+            <div>
+                <a class="flex items-center gap-2" href="#">
+                    <span>مشاهده همه</span>
+                    <span><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                          </svg>
+                          </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="swiper bim-slider">
+            <div class="swiper-wrapper ease-linear">
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-1.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-2.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-3.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-4.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-5.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-6.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-7.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-8.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-9.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-10.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-11.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-12.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-13.jpg' %}">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-2xl flex items-center justify-center overflow-hidden leading-10">
+                        <img alt="" class="w-24 grayscale hover:grayscale-0" src="{% static 'images/b-14.jpg' %}">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</section>
+
+<section class="px-6 my-24">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center">
+                <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-YekanBakh-ExtraBold mr-2">نظرات کاربران</h2>
+            </div>
+            <div>
+                <a class="flex items-center gap-2" href="#">
+                    <span>مشاهده همه</span>
+                    <span><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                stroke-linejoin="round"/>
+                        </svg>
+                        </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="swiper comment-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="bg-white p-8 rounded-2xl relative">
+                        <img alt="" class="absolute top-10 left-10" src="{% static 'images/quotation.png' %}">
+                        <div class="flex items-center">
+                            <div class="avatar">
+                                <div class="w-20 rounded-full">
+                                    <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                </div>
+                            </div>
+                            <div class="mr-4">
+                                <h3 class="font-YekanBakh-ExtraBold text-base">دکتر مینا دلاور</h3>
+                                <p>متخصص زنان و زایمان</p>
+                            </div>
+                        </div>
+                        <div class="leading-8 mt-4">
+                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                            است
+                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white p-8 rounded-2xl relative">
+                        <img alt="" class="absolute top-10 left-10" src="{% static 'images/quotation.png' %}">
+                        <div class="flex items-center">
+                            <div class="avatar">
+                                <div class="w-20 rounded-full">
+                                    <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                </div>
+                            </div>
+                            <div class="mr-4">
+                                <h3 class="font-YekanBakh-ExtraBold text-base">دکتر مینا دلاور</h3>
+                                <p>متخصص زنان و زایمان</p>
+                            </div>
+                        </div>
+                        <div class="leading-8 mt-4">
+                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                            است
+                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="bg-white p-8 rounded-2xl relative">
+                        <img alt="" class="absolute top-10 left-10" src="{% static 'images/quotation.png' %}">
+                        <div class="flex items-center">
+                            <div class="avatar online">
+                                <div class="w-20 rounded-full">
+                                    <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                </div>
+                            </div>
+                            <div class="mr-4">
+                                <h3 class="font-YekanBakh-ExtraBold text-base">دکتر مینا دلاور</h3>
+                                <p>متخصص زنان و زایمان</p>
+                            </div>
+                        </div>
+                        <div class="leading-8 mt-4">
+                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                            است
+                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</section>
+
+{% if news %}
+<section class="px-6 my-24">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center">
+                <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-YekanBakh-ExtraBold mr-2">بیشتر بدانید...</h2>
+            </div>
+            <div>
+                <a class="flex items-center gap-2" href="blog.html">
+                    <span>مشاهده همه</span>
+                    <span><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                        </svg>
+                        </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="swiper blog-slider">
+            <div class="swiper-wrapper">
+                {% for item in news %}
+                <div class="swiper-slide">
+                    <div class="bg-white p-4 rounded-2xl leading-8">
+                        <a href="single-blog.html"><img alt="" class="rounded-xl"
+                                                        src="{{ item.pic.url }}"></a>
+                        <div class="">
+                            <a href="single-blog.html"><h3 class="font-YekanBakh-ExtraBold text-base mt-4 mb-2">{{
+                                item.title }}</h3></a>
+                            <p>{{ item.text|truncatechars:40 }}</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-dashed pt-4 mt-4">
+                            <div>{{ item.created_date }}</div>
+                            <div><a href="#">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                </svg>
+                            </a></div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+
+{% endblock %}

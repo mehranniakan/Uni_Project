@@ -1,0 +1,202 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}ویرایش اطلاعات کاربری{% endblock %}
+{% block header_title %}ویرایش اطلاعات کاربری{% endblock %}
+{% block extra_css %}
+{{ block.super }}
+<link href="{% static 'css/edit_account.css' %}" rel="stylesheet">
+<link href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% if form.non_field_errors %}
+<div id="toast_container_nonfield">
+    {% for error in form.non_field_errors %}
+    <div class="nf_toast_message">
+        <div class="nf_toast_text">{{ error }}</div>
+        <button class="nf_toast_close" type="button">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="page-wrapper">
+    <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+            <div>
+                <div class="card-title">ویرایش مشخصات کاربری</div>
+                <div class="card-subtitle">
+                    لطفاً اطلاعات خود را با دقت تکمیل یا به‌روزرسانی کنید.
+                </div>
+            </div>
+            <div class="card-badge">پروفایل کاربر</div>
+        </div>
+
+        <!-- Form -->
+        <form action="{% url 'edit_account' form.instance.id %}" method="post">
+
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="first_name">
+                        نام
+                        <span class="required-mark">*</span>
+                    </label>
+                    {{ form.first_name }}
+                    {% for error in form.first_name.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">
+                        نام خانوادگی
+                        <span class="required-mark">*</span>
+                    </label>
+                    {{ form.last_name }}
+                    {% for error in form.last_name.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="national_id">
+                        کد ملی
+                        <span class="required-mark">*</span>
+                    </label>
+                    {{ form.username }}
+                    <span class="hint">مثال: ۰۰۱۲۳۴۵۶۷۸</span>
+                    {% for error in form.username.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="birth_date">
+                        تاریخ تولد
+                        <span class="required-mark">*</span>
+                    </label>
+                    {{ form.birthdate }}
+                    {% for error in form.birthdate.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label>جنسیت</label>
+                    {{ form.sex }}
+                    {% for error in form.sex.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">
+                        شماره موبایل
+                        <span class="required-mark">*</span>
+                    </label>
+                    {{ form.mobile_number }}
+                    <span class="hint">شماره را با ۰ شروع کنید.</span>
+                    {% for error in form.mobile_number.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if request.user.role == 'patient' %}
+            <!-- آدرس -->
+            <div class="form-group">
+                <label for="address">
+                    آدرس
+                    <span class="required-mark">*</span>
+                </label>
+                {{ form.address }}
+                {% for error in form.address.errors %}
+                <div class="field-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- اطلاعات بیمه -->
+            <div>
+                <div class="section-title">اطلاعات بیمه</div>
+                <div class="section-divider"></div>
+                <div class="insurance-grid">
+                    <div class="form-group">
+                        <label for="basic_insurance">بیمه پایه</label>
+                        {{ form.insurance_base }}
+                        {% for error in form.insurance_base.errors %}
+                        <div class="field-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supplementary_insurance">بیمه تکمیلی</label>
+                        {{ form.insurance_supp }}
+                        {% for error in form.insurance_supp.errors %}
+                        <div class="field-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="full_insurance">بیمه فول درمان</label>
+                        {{ form.insurance_full }}
+                        {% for error in form.insurance_full.errors %}
+                        <div class="field-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+
+            <!-- دکمه‌ها -->
+            <div class="form-actions">
+                <button class="btn-primary" type="submit">
+                    ذخیره تغییرات
+                </button>
+                <button class="btn-secondary" type="button">
+                    انصراف
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/persian-date@latest/dist/persian-date.min.js"></script>
+<script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        const $dateInput = $('#birthdate-picker');
+
+        if ($dateInput.length) {
+
+            const currentValue = $dateInput.val();
+
+            $dateInput.persianDatepicker({
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                initialValue: true,
+                initialValueType: 'persian',
+                calendar: {
+                    persian: {
+                        locale: 'fa'
+                    }
+                }
+            });
+
+            if (currentValue) {
+                $dateInput.val(currentValue);
+            }
+        }
+
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,367 @@
+/* فونت ساده و ریست اولیه */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "IRANSans", sans-serif;
+    background: #f3f7fb;
+    color: #1f2933;
+    direction: rtl;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 960px;
+    border-radius: 16px;
+    box-shadow: 0 18px 40px rgba(15, 35, 52, 0.12);
+    padding: 24px;
+}
+
+.card-header {
+    border-bottom: 1px solid #e5edf7;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #114a8d;
+}
+
+.card-subtitle {
+    font-size: 0.875rem;
+    color: #6b7c93;
+}
+
+.card-badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #e0efff;
+    color: #165996;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+}
+
+/* تک‌ستونه در موبایل */
+@media (max-width: 768px) {
+    .card {
+        padding: 20px 16px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #16324f;
+}
+
+.required-mark {
+    color: #d7263d;
+    margin-right: 2px;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+    border-radius: 10px;
+    border: 1px solid #c3d5f0;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+    outline: none;
+    background: #f9fbff;
+    transition: all 0.18s ease-out;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #1c64f2;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+    background: #ffffff;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.hint {
+    font-size: 0.75rem;
+    color: #8a9bb5;
+}
+
+/* جنسیت */
+.gender-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #334e68;
+}
+
+.gender-option input[type="radio"] {
+    accent-color: #1c64f2;
+}
+
+/* بخش بیمه */
+.section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #114a8d;
+    margin-bottom: 4px;
+}
+
+.section-divider {
+    height: 1px;
+    background: linear-gradient(to left, transparent, #d0ddf1, transparent);
+    margin-bottom: 8px;
+}
+
+.insurance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 24px;
+}
+
+@media (max-width: 1024px) {
+    .insurance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .insurance-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* دکمه‌ها */
+.form-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    border-top: 1px solid #e5edf7;
+    padding-top: 16px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
+    background 0.12s ease-out;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(37, 99, 235, 0.35);
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+.btn-secondary {
+    background: #edf2ff;
+    color: #1f3a8a;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #c7d2fe;
+    cursor: pointer;
+    transition: background 0.12s ease-out, color 0.12s ease-out;
+}
+
+.btn-secondary:hover {
+    background: #e0e7ff;
+}
+
+#toast_container_nonfield {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    max-width: 90%;
+    direction: rtl;
+}
+
+/* استایل پیام خطا */
+#toast_container_nonfield .nf_toast_message {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+
+    padding: 14px 18px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    max-width: 420px;
+    width: fit-content;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.35);
+    animation: nf_toast_in .35s ease;
+}
+
+#toast_container_nonfield .nf_toast_close {
+    border: none;
+    background: #fff;
+    color: #dc2626;
+
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toast_container_nonfield .nf_toast_close:hover {
+    background: #fee2e2;
+}
+
+@keyframes nf_toast_in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield {
+        top: 20px;
+        bottom: auto;
+
+        right: 50%;
+        transform: translateX(50%);
+
+        width: 90%;
+        align-items: center;
+    }
+
+    #toast_container_nonfield .nf_toast_message {
+        width: 100%;
+        max-width: none;
+    }
+
+}
+
+@keyframes nf_toast_in_desktop {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes nf_toast_in_mobile {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* دسکتاپ */
+#toast_container_nonfield .nf_toast_message {
+    animation: nf_toast_in_desktop .45s cubic-bezier(.22, .68, .36, 1);
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield .nf_toast_message {
+        animation: nf_toast_in_mobile .45s cubic-bezier(.22, .68, .36, 1);
+    }
+
+}

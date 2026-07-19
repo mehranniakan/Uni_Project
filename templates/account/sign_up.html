@@ -1,0 +1,186 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت نام</title>
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.min.css" rel="stylesheet">
+
+</head>
+
+<body class="signup-page" style="background: url('{% static 'images/signupback.png' %}') center/cover no-repeat;">
+
+<div class="signup-card">
+
+    <div class="signup-left"
+         style="background: url('{% static 'images/signup_left.png' %}') center/cover no-repeat;">
+    </div>
+
+    <div class="signup-right">
+
+        <h2>ایجاد حساب کاربری</h2>
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <div class="signup-row">
+
+                <div class="signup-field-wrapper {% if form.first_name.errors %}has-error{% endif %}">
+                    <label>{{ form.first_name.label_tag }}</label>
+                    {{ form.first_name }}
+                    {% for error in form.first_name.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="signup-field-wrapper {% if form.last_name.errors %}has-error{% endif %}">
+                    <label>{{ form.last_name.label_tag }}</label>
+                    {{ form.last_name }}
+                    {% for error in form.last_name.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="signup-row">
+
+                <div class="signup-field-wrapper {% if form.username.errors %}has-error{% endif %}">
+                    <label>{{ form.username.label_tag }}</label>
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="signup-field-wrapper {% if form.birthdate.errors %}has-error{% endif %}">
+                    <label>{{ form.birthdate.label_tag }}</label>
+                    {{ form.birthdate }}
+                    {% for error in form.birthdate.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="signup-row">
+
+                <div class="signup-field-wrapper {% if form.sex.errors %}has-error{% endif %}">
+                    <label>{{ form.sex.label_tag }}</label>
+                    {{ form.sex }}
+                    {% for error in form.sex.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="signup-field-wrapper {% if form.mobile_number.errors %}has-error{% endif %}">
+                    <label>{{ form.mobile_number.label_tag }}</label>
+                    {{ form.mobile_number }}
+                    {% for error in form.mobile_number.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="signup-row">
+
+                <div class="signup-field-wrapper {% if form.insurance_base.errors %}has-error{% endif %}">
+                    <label>{{ form.insurance_base.label_tag }}</label>
+                    {{ form.insurance_base }}
+                    {% for error in form.insurance_base.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="signup-field-wrapper {% if form.insurance_supp.errors %}has-error{% endif %}">
+                    <label>{{ form.insurance_supp.label_tag }}</label>
+                    {{ form.insurance_supp }}
+                    {% for error in form.insurance_supp.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="signup-row-full">
+
+                <div class="signup-field-wrapper {% if form.insurance_full.errors %}has-error{% endif %}">
+                    <label>{{ form.insurance_full.label_tag }}</label>
+                    {{ form.insurance_full }}
+                    {% for error in form.insurance_full.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="signup-row">
+
+                <div class="signup-field-wrapper {% if form.password1.errors %}has-error{% endif %}">
+                    <label>{{ form.password1.label_tag }}</label>
+                    {{ form.password1 }}
+                    {% for error in form.password1.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="signup-field-wrapper {% if form.password2.errors %}has-error{% endif %}">
+                    <label>{{ form.password2.label_tag }}</label>
+                    {{ form.password2 }}
+                    {% for error in form.password2.errors %}
+                    <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <button class="signup-btn" type="submit">ثبت نام</button>
+
+        </form>
+
+    </div>
+
+</div>
+{% if form.non_field_errors %}
+<div class="toast-container">
+    {% for error in form.non_field_errors %}
+    <div class="toast-message">
+        <span class="toast-text">{{ error }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/persian-date@latest/dist/persian-date.min.js"></script>
+<script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.min.js"></script>
+
+<script>
+    $(function () {
+        let $dateInput = $('#birthdate-picker');
+
+        if ($dateInput.length) {
+            console.log("Datepicker field found!");
+
+            $dateInput.persianDatepicker({
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                initialValue: false,
+                calendar: {
+                    persian: {
+                        locale: 'fa'
+                    }
+                }
+            });
+        } else {
+            console.error("Datepicker field NOT found!");
+        }
+    });
+
+</script>
+
+</body>
+</html>

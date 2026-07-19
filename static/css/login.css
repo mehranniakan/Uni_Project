@@ -1,0 +1,341 @@
+/* RESET عمومی */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "IRANSans", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =============================================== */
+/* ================ LOGIN PAGE ==================== */
+/* =============================================== */
+
+.login-page .login-card {
+    width: 900px;
+    height: 520px;
+    background: #fff;
+    border-radius: 26px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.login-page .login-left {
+    width: 45%;
+}
+
+.login-page .login-right {
+    width: 55%;
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-page h2 {
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+
+.login-page .login-row {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.login-page .login-field-wrapper label {
+    display: block;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.login-page .login-field-wrapper {
+    margin-bottom: 16px;
+}
+
+.login-page input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #d0d0d0;
+    background: #fafafa;
+}
+
+.login-page .login-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #2b83f6;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.login-register-link {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 15px;
+    color: #444;
+}
+
+.login-register-link a {
+    color: #2b83f6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-register-link a:hover {
+    text-decoration: underline;
+}
+
+/* =============================================== */
+/* ================ SIGNUP PAGE =================== */
+/* =============================================== */
+
+.signup-page .signup-card {
+    width: 1150px;
+    min-height: 720px; /* مهم: اجازه بزرگ شدن کارت */
+    background: #fff;
+    border-radius: 28px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.18);
+}
+
+.signup-page .signup-left {
+    width: 45%;
+}
+
+.signup-page .signup-right {
+    width: 55%;
+    padding: 50px 55px;
+    display: flex; /* برای کنترل بهتر دکمه و ردیف‌ها */
+    flex-direction: column; /* فرم ستونی */
+}
+
+.signup-page h2 {
+    font-size: 28px;
+    margin-bottom: 35px;
+    font-weight: bold;
+}
+
+.signup-page form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.signup-page .signup-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.signup-page .signup-row-full {
+    margin-bottom: 18px;
+}
+
+.signup-page .signup-field-wrapper label {
+    display: block;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 8px; /* فاصله متوسط از فیلد */
+}
+
+.signup-page .signup-field-wrapper {
+    flex: 1; /* در ستون‌های دوگانه، تقسیم برابر */
+    margin-bottom: 16px; /* فاصله بین فیلدها */
+}
+
+.signup-page input,
+.signup-page select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #d0d0d0;
+    background: #fafafa;
+}
+
+.signup-page .signup-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #2b83f6;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px; /* کمی فاصله از آخرین ردیف */
+    flex-shrink: 0; /* جلوگیری از بیرون افتادن */
+}
+
+/* خطاها */
+.field-error {
+    font-size: 13px;
+    color: #e74c3c;
+    margin-top: 4px;
+}
+
+.form-nonfield-errors {
+    background: #ffeaea;
+    color: #e74c3c;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.signup-page .signup-field-wrapper.has-error input,
+.signup-page .signup-field-wrapper.has-error select,
+.login-page .login-field-wrapper.has-error input {
+    border: 1px solid #e74c3c;
+}
+
+/* =============================================== */
+/* =============== RESPONSIVE ===================== */
+/* =============================================== */
+
+@media (max-width: 950px) {
+
+    /* LOGIN */
+    .login-page .login-card {
+        width: 95%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .login-page .login-left {
+        width: 100%;
+        height: 240px;
+    }
+
+    .login-page .login-right {
+        width: 100%;
+        padding: 30px;
+    }
+
+    /* SIGNUP */
+    .signup-page .signup-card {
+        width: 95%;
+        min-height: unset; /* اجازه جریان طبیعی ارتفاع در موبایل */
+        height: auto;
+        flex-direction: column;
+    }
+
+    .signup-page .signup-left {
+        width: 100%;
+        height: 260px;
+    }
+
+    .signup-page .signup-right {
+        width: 100%;
+        padding: 30px;
+    }
+
+    .signup-page .signup-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* ================================
+   TOAST MESSAGE - Bottom Right
+================================ */
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* پیام اصلی */
+.toast-message {
+    min-width: 260px;
+    max-width: 340px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 3px rgba(255, 255, 255, 0.45);
+    animation: toastIn 0.35s ease-out;
+    font-size: 14px;
+}
+
+/* آیکن کوچک */
+.toast-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+/* متن */
+.toast-text {
+    flex: 1;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* انواع پیام */
+.toast-message.error {
+    border-left: 5px solid #ff4e4e;
+}
+
+.toast-message.error .toast-icon {
+    background: #ff4e4e;
+}
+
+.toast-message.success {
+    border-left: 5px solid #28c76f;
+}
+
+.toast-message.success .toast-icon {
+    background: #28c76f;
+}
+
+.toast-message.warning {
+    border-left: 5px solid #f1c232;
+}
+
+.toast-message.warning .toast-icon {
+    background: #f1c232;
+}
+
+.toast-message.info {
+    border-left: 5px solid #5bb7ff;
+}
+
+.toast-message.info .toast-icon {
+    background: #5bb7ff;
+}
+
+/* انیمیشن ورود */
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

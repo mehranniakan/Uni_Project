@@ -1,0 +1,46 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}{% if action == 'Add' %}افزودن خبر{% else %}ویرایش خبر{% endif %}{% endblock %}
+
+{% block extra_css %}
+{{ form.media }}
+<link href="{% static 'css/news_form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% if form.non_field_errors %}
+<div id="toast_container_nonfield">
+    {% for error in form.non_field_errors %}
+    <div class="nf_toast_message">
+        <div class="nf_toast_text">{{ error }}</div>
+        <button class="nf_toast_close" type="button">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container">
+    <h2>افزودن خبر</h2>
+    <form action="{% url 'add_news' %}" enctype="multipart/form-data" method="post">
+
+        {% csrf_token %}
+
+        <label>عنوان خبر</label>
+        {{ form.title }}
+
+        <label>متن خبر</label>
+        {{ form.text }}
+
+        <label>آپلود عکس</label>
+        {{ form.pic }}
+
+        <button type="submit">ثبت خبر</button>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+{{ form.media }}
+{% endblock %}

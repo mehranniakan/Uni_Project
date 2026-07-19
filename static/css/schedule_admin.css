@@ -1,0 +1,420 @@
+/* ====== BACKGROUND ====== */
+
+body {
+    min-height: 100vh;
+}
+
+/* ====== HEADER ====== */
+
+.schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+/* SEARCH WRAPPER */
+
+.search-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-wrapper form {
+    position: relative;
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 16px 55px 16px 20px; /* جا برای دکمه */
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    background: white;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn svg {
+    width: 20px;
+    height: 20px;
+    color: #64748b;
+}
+
+.search-btn:hover svg {
+    color: #0ea5e9;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 640px) {
+    .schedule-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+}
+
+
+.add-btn {
+    border: none;
+    background: rgba(14, 165, 233, .8);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+    box-shadow: 0 8px 30px rgba(14, 165, 233, .35);
+}
+
+.add-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(14, 165, 233, .5);
+}
+
+/* ====== CLINICS WRAPPER ====== */
+
+.clinics-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ====== GLASS CARD ====== */
+
+.clinic-card {
+    background: rgba(255, 255, 255, .35);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, .08);
+    transition: .4s ease;
+}
+
+.clinic-card:hover {
+    box-shadow: 0 35px 70px rgba(0, 0, 0, .12);
+}
+
+.clinic-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0c4a6e;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, .4);
+}
+
+/* ====== SMART GRID ====== */
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* دو تا در هر سطر */
+    gap: 28px;
+}
+
+@media (max-width: 640px) {
+    .schedule-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ====== GLASS ITEM ====== */
+
+.schedule-item {
+    background: white;
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid #f1f5f9;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    0 20px 30px rgba(0, 0, 0, 0.04);
+
+    transition: all .35s cubic-bezier(.4, 0, .2, 1);
+}
+
+
+.schedule-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.06),
+    0 20px 35px rgba(0, 0, 0, 0.10);
+}
+
+/* ====== IMAGE ====== */
+
+.schedule-item img {
+    width: 75px;
+    height: 75px;
+    border-radius: 18px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, .7);
+}
+
+/* ====== INFO ====== */
+
+.schedule-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.doctor-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.time {
+    font-size: 13px;
+    color: #334155;
+}
+
+.capacity {
+    font-size: 13px;
+    color: #0284c7;
+    font-weight: 600;
+}
+
+/* ====== EDIT BUTTON ====== */
+
+.edit-btn {
+    border: none;
+    background: rgba(255, 255, 255, .6);
+    color: #0369a1;
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+    backdrop-filter: blur(10px);
+}
+
+.edit-btn:hover {
+    background: #0ea5e9;
+    color: white;
+    box-shadow: 0 8px 20px rgba(14, 165, 233, .4);
+}
+
+/* ====== MOBILE ====== */
+
+@media (max-width: 640px) {
+
+    .schedule-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .edit-btn {
+        margin-right: 0;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+}
+
+.close-btn {
+    border: none;
+    background: rgba(239, 68, 68, .9); /* قرمز شیشه‌ای */
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+    box-shadow: 0 8px 30px rgba(239, 68, 68, .35);
+}
+
+.close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+}
+
+.close-btn:hover {
+    transform: translateY(-3px);
+    background: rgba(220, 38, 38, 1);
+    box-shadow: 0 15px 40px rgba(239, 68, 68, .55);
+}
+
+@media (max-width: 640px) {
+    .close-btn {
+        width: 100%;
+    }
+}
+
+/* ===== TOAST ===== */
+
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.toast {
+    min-width: 260px;
+    max-width: 320px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    pointer-events: auto;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all .35s ease;
+}
+
+/* نمایش */
+.toast.show {
+    opacity: 1;
+    transform: translateY(20px);
+}
+
+/* انواع */
+
+.toast.success {
+    background: rgba(34, 197, 94, .9);
+}
+
+.toast.error {
+    background: rgba(239, 68, 68, .9);
+}
+
+.toast.info {
+    background: rgba(14, 165, 233, .9);
+}
+
+/* دکمه بستن */
+.toast-close {
+    cursor: pointer;
+    font-size: 16px;
+    opacity: .8;
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+.toast.warning {
+    background: rgba(245, 158, 11, .9);
+}
+
+.empty-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+}
+
+.empty-box {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 40px 50px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.empty-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.empty-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #334155;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.cancel-btn {
+    border: none;
+    background: rgba(255, 255, 255, .6);
+    color: #b91c1c;
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+    backdrop-filter: blur(10px);
+}
+
+.cancel-btn:hover {
+    background: rgba(239, 68, 68, 1); /* قرمز کامل مانند edit-btn */
+    color: white;
+    box-shadow: 0 8px 20px rgba(239, 68, 68, .45);
+    transform: translateY(-3px);
+}
+
+.action-buttons {
+    margin-right: auto;
+    display: flex;
+    gap: 10px; /* فاصله استاندارد */
+}
+
+@media (max-width: 640px) {
+    .schedule-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .action-buttons {
+        width: 100%;
+        flex-direction: column;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+
+    .edit-btn,
+    .cancel-btn {
+        width: 100%;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+    }
+}

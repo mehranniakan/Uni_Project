@@ -1,0 +1,391 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html dir="rtl" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    {% compress css %}
+    <link href="{% static 'node_modules/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'fonts/font.css' %}" rel="stylesheet">
+    {% endcompress %}
+    <title>صفحه چت</title>
+
+</head>
+<body class="bg-slate-50 font-YekanBakh-Regular text-sm h-screen">
+<section class="px-6">
+    <div class="container mx-auto max-w-screen-2xl">
+        <div class="bg-white rounded-bl-3xl rounded-br-3xl py-3 px-6">
+            <div class="flex items-center justify-between">
+                <div class="z-30 lg:hidden">
+                    <div class="lg:hidden leading-none z-10">
+                        <div class="drawer">
+                            <input class="drawer-toggle" id="my-drawer-5" type="checkbox"/>
+                            <div class="drawer-content">
+                                <label class="swap swap-rotate drawer-button" for="my-drawer-5">
+
+                                    <!-- this hidden checkbox controls the state -->
+                                    <input type="checkbox"/>
+
+                                    <svg class="w-6 h-6 stroke-black swap-off fill-current" fill="none" stroke="currentColor"
+                                         stroke-width="1.5" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+
+                                    <svg class="w-6 h-6 stroke-black swap-on fill-current" fill="none" stroke="currentColor"
+                                         stroke-width="1.5" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+
+                                </label>
+                            </div>
+                            <div class="drawer-side">
+                                <label class="drawer-overlay" for="my-drawer-5"></label>
+                                <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
+
+                                    <div>
+
+                                        <div class="h-24 bg-indigo-500 relative rounded-xl">
+                                            <div class="text-center absolute right-[6.3rem]">
+                                                <div class="avatar online mt-8">
+                                                    <div class="w-24 rounded-full">
+                                                        <img src="../media/docs/def.jpg"/>
+                                                    </div>
+                                                </div>
+
+                                                <h1 class="text-sm font-YekanBakh-Bold mt-4">{{ user.first_name }} {{
+                                                    user.last_name }}</h1>
+                                            </div>
+                                        </div>
+
+                                        <nav class="mt-24">
+                                            {% include 'Widgets/profile_sidebar_px6.html' %}
+                                        </nav>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+
+                    <span class="text-sm font-YekanBakh-Bold mr-1">به ویزیت خوش آمدید...</span>
+                </div>
+                <div>
+                    <div class="dropdown dropdown-left dropdown-bottom">
+                        <svg class="w-10 h-10 cursor-pointer m-1 bg-stone-200 p-2 rounded-full" fill="none" stroke="currentColor" stroke-width="1.5"
+                             tabindex="0" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                        </svg>
+
+
+                        <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-xs"
+                            tabindex="0">
+                            <li><a>اطلاعیه شماره 1</a></li>
+                            <li><a>اطلاعیه شماره 2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="px-6 mt-4">
+    <div class="container mx-auto max-w-screen-2xl">
+        <div class="flex gap-4">
+            <div class="w-96 bg-white rounded-3xl overflow-hidden hidden lg:block">
+                <div class="h-24 bg-indigo-500 relative">
+                    <div class="text-center absolute right-[6.3rem]">
+                        <div class="avatar online mt-8">
+                            <div class="w-24 rounded-full">
+                                <img src="../media/docs/def.jpg"/>
+                            </div>
+                        </div>
+
+                        <h1 class="text-sm font-YekanBakh-Bold mt-4">{{ user.first_name }} {{ user.last_name }}</h1>
+                    </div>
+                </div>
+                {% include 'Widgets/profile_sidebar_px6_mt4.html' %}
+            </div>
+            <div class="bg-white p-4 lg:p-8 rounded-3xl w-full">
+                <div class="flex gap-8">
+                    <div class="w-full md:w-80 lg:w-96 lg:flex-shrink-0">
+                        <div class="p-3 bg-stone-200 rounded-xl mb-4">
+                            <h1 class="text-sm font-YekanBakh-Bold">صفحه چت</h1>
+                        </div>
+                        <div class="search flex-2 pb-6 px-2">
+                            <input class="input input-bordered w-full rounded-xl placeholder:text-xs" placeholder="جستجو کنید..."
+                                   type="text"/>
+                        </div>
+                        <div class="">
+                            <div class="entry cursor-pointer transform hover:scale-105 duration-300 transition-transform bg-white mb-2 rounded px-4 py-3 flex items-center justify-between border-b">
+                                <div class="flex items-center">
+                                    <div class="avatar online">
+                                        <div class="w-14 rounded-full">
+                                            <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                        </div>
+                                    </div>
+                                    <div class="px-2">
+                                        <div class="truncate w-32"><span class="font-YekanBakh-Bold">طاها سکندری</span>
+                                        </div>
+                                        <div><small class="text-gray-600">سلام بهتری خانم حیدری؟</small></div>
+                                    </div>
+                                </div>
+                                <div class=" text-right">
+                                    <div><small class="text-gray-500">15 خرداد</small></div>
+                                    <div>
+                                        <small class="text-xs bg-red-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
+                                            23
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entry cursor-pointer transform hover:scale-105 duration-300 transition-transform bg-white mb-2 rounded px-4 py-3 flex items-center justify-between border-b">
+                                <div class="flex items-center">
+                                    <div class="avatar online">
+                                        <div class="w-14 rounded-full">
+                                            <img src="{% static 'images/avatar-1.jpg' %}"/>
+                                        </div>
+                                    </div>
+                                    <div class="px-2">
+                                        <div class="truncate w-32"><span class="font-YekanBakh-Bold">سهیل نهاوندی</span>
+                                        </div>
+                                        <div><small class="text-gray-600">سلام بهتری خانم حیدری؟</small></div>
+                                    </div>
+                                </div>
+                                <div class=" text-right">
+                                    <div><small class="text-gray-500">15 خرداد</small></div>
+                                    <div>
+                                        <small class="text-xs bg-red-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
+                                            23
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entry cursor-pointer transform hover:scale-105 duration-300 transition-transform bg-white mb-2 rounded px-4 py-3 flex items-center justify-between border-b">
+                                <div class="flex items-center">
+                                    <div class="avatar online">
+                                        <div class="w-14 rounded-full">
+                                            <img src="{% static 'images/avatar-2.jpg' %}"/>
+                                        </div>
+                                    </div>
+                                    <div class="px-2">
+                                        <div class="truncate w-32"><span
+                                                class="font-YekanBakh-Bold">بیتا گوهردشتی</span></div>
+                                        <div><small class="text-gray-600">سلام بهتری خانم حیدری؟</small></div>
+                                    </div>
+                                </div>
+                                <div class=" text-right">
+                                    <div><small class="text-gray-500">15 خرداد</small></div>
+                                    <div>
+                                        <small class="text-xs bg-red-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
+                                            23
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entry cursor-pointer transform hover:scale-105 duration-300 transition-transform bg-white mb-2 rounded px-4 py-3 flex items-center justify-between border-b">
+                                <div class="flex items-center">
+                                    <div class="avatar online">
+                                        <div class="w-14 rounded-full">
+                                            <img src="{% static 'images/avatar-6.png' %}"/>
+                                        </div>
+                                    </div>
+                                    <div class="px-2">
+                                        <div class="truncate w-32"><span
+                                                class="font-YekanBakh-Bold">علی رضا یاسری</span></div>
+                                        <div><small class="text-gray-600">سلام بهتری خانم حیدری؟</small></div>
+                                    </div>
+                                </div>
+                                <div class=" text-right">
+                                    <div><small class="text-gray-500">15 خرداد</small></div>
+                                    <div>
+                                        <small class="text-xs bg-red-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
+                                            23
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="entry cursor-pointer transform hover:scale-105 duration-300 transition-transform bg-white mb-2 rounded px-4 py-3 flex items-center justify-between border-b">
+                                <div class="flex items-center">
+                                    <div class="avatar online">
+                                        <div class="w-14 rounded-full">
+                                            <img src="{% static 'images/avatar-7.png' %}"/>
+                                        </div>
+                                    </div>
+                                    <div class="px-2">
+                                        <div class="truncate w-32"><span class="font-YekanBakh-Bold">وحید گیلاسی</span>
+                                        </div>
+                                        <div><small class="text-gray-600">سلام بهتری خانم حیدری؟</small></div>
+                                    </div>
+                                </div>
+                                <div class=" text-right">
+                                    <div><small class="text-gray-500">15 خرداد</small></div>
+                                    <div>
+                                        <small class="text-xs bg-red-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
+                                            23
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="w-full hidden md:block">
+                        <div class="p-3 bg-stone-200 rounded-xl mb-4">
+                            <h1 class="text-sm font-YekanBakh-Bold">چت با دکتر نسترن صباحی</h1>
+                        </div>
+                        <div class="">
+                            <div class="chat chat-start">
+                                <div class="chat-image avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                    </div>
+                                </div>
+
+                                <div class="bg-indigo-500 text-white py-2 px-4 rounded-full rounded-br-none">سلام خانم
+                                    دکتر وقت بخیر
+                                </div>
+                                <time class="chat-footer opacity-50 text-xs mt-1">
+                                    12:46
+                                </time>
+                            </div>
+                            <div class="chat chat-end">
+                                <div class="chat-image avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img src="{% static 'images/avatar-2.jpg' %}"/>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-500 text-white py-2 px-4 rounded-full rounded-bl-none">خیلی ممنون،
+                                    چطور میتونم کمکتون کنم؟
+                                </div>
+                                <time class="chat-footer opacity-50 text-xs mt-1">
+                                    12:46
+                                </time>
+
+                            </div>
+                            <div class="chat chat-start">
+                                <div class="chat-image avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                    </div>
+                                </div>
+
+                                <div class="bg-indigo-500 text-white py-2 px-4 rounded-full rounded-br-none">دارم میگردم
+                                    هنوز، میتونی یکم بیشتر توضیح بدی؟
+                                </div>
+                                <time class="chat-footer opacity-50 text-xs mt-1">
+                                    12:46
+                                </time>
+                            </div>
+                            <div class="chat chat-start">
+                                <div class="chat-image avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                    </div>
+                                </div>
+
+                                <div class="bg-indigo-500 text-white py-2 px-4 rounded-full rounded-br-none">هنوز هستی؟
+                                    زمانم تموم داره میشه
+                                </div>
+                                <time class="chat-footer opacity-50 text-xs mt-1">
+                                    12:46
+                                </time>
+                            </div>
+                            <div class="chat chat-end">
+                                <div class="chat-image avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img src="{% static 'images/avatar-2.jpg' %}"/>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-500 text-white py-2 px-4 rounded-full rounded-bl-none">بله متوجه شدم
+                                    خانم دکتر
+                                </div>
+                                <time class="chat-footer opacity-50 text-xs mt-1">
+                                    12:46
+                                </time>
+
+                            </div>
+                            <div class="chat chat-end">
+                                <div class="chat-image avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img src="{% static 'images/avatar-2.jpg' %}"/>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-500 text-white py-2 px-4 rounded-full rounded-bl-none">دارو هایی که
+                                    فرمودید را مصرف میکنم، نتیجه را خدمتتتون اعلام میکنم
+                                </div>
+                                <time class="chat-footer opacity-50 text-xs mt-1">
+                                    12:46
+                                </time>
+
+                            </div>
+                        </div>
+                        <div class="flex-2 pt-4">
+                            <div class="write bg-white mt-8 p-4 flex rounded-lg">
+                                <div class="flex-3 flex content-center items-center text-center p-4 pr-0">
+                                        <span class="block text-center text-gray-400 hover:text-gray-800">
+                                            <svg class="h-6 w-6" fill="none" stroke="currentColor"
+                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                 viewBox="0 0 24 24"><path
+                                                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        </span>
+                                </div>
+                                <div class="flex-1">
+                                    <textarea autofocus class="w-full block outline-none py-4 px-4 bg-transparent"
+                                              name="message" placeholder="تایپ کنید" rows="1"></textarea>
+                                </div>
+                                <div class="flex-2 w-32 p-2 flex content-center items-center">
+                                    <div class="flex-1 text-center">
+                                            <span class="text-gray-400 hover:text-gray-800">
+                                                <span class="inline-block align-text-bottom">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                         viewBox="0 0 24 24"><path
+                                                            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                                                </span>
+                                            </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <button class="bg-gray-600 w-10 h-10 rounded-full inline-block">
+                                                <span class="inline-block align-text-bottom">
+                                                  <svg class="w-6 h-6 text-white" fill="none"
+                                                       stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                                                       xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M4.5 12.75l6 6 9-13.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"></path>
+                                                  </svg>
+                                                  
+                                                </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+{% compress js %}
+<script src="{% static 'node_modules/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endcompress %}
+</body>
+</html>

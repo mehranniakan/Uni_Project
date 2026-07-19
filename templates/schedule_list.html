@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="mb-12 px-4">
+    <div class="container mx-auto max-w-screen-xl">
+
+        <!-- breadcrumbs -->
+        <div class="bg-white p-3 rounded-3xl my-4">
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'main' %}">خانه</a></li>
+                    <li>برنامه امروز درمانگاه</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4">
+
+            <!-- لیست برنامه‌ها -->
+            <div class="col-span-12 lg:col-span-9 lg:order-2">
+
+                <div class="flex flex-col gap-4">
+
+                    {% for item in page_obj %}
+                    <div class="bg-white p-8 rounded-3xl">
+
+                        <!-- پروفایل پزشک -->
+                        <div class="flex flex-col lg:flex-row items-center justify-between">
+                            <div class="flex items-center mb-8 lg:mb-0">
+
+                                <div class="avatar online">
+                                    <div class="w-20 rounded-full">
+                                        <img src="{{ item.doctor.doctor.pic.url }}">
+                                    </div>
+                                </div>
+
+                                <div class="mr-4">
+                                    <h3 class="font-YekanBakh-ExtraBold text-base mb-2">
+                                        {{ item.doctor.first_name }} {{ item.doctor.last_name }}
+                                    </h3>
+                                    <p class="text-gray-500">{{ item.doctor.doctor.speciality }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="text-yellow-500 flex items-center">
+                                    <span class="font-YekanBakh-SemiBold">4.8</span>
+                                </div>
+                                <div class="text-green-500 flex items-center">
+                                    <span class="font-YekanBakh-SemiBold">96 درصد پیشنهاد</span>
+                                </div>
+                                <span class="font-YekanBakh-SemiBold">2733 نظر</span>
+                            </div>
+                        </div>
+
+                        <!-- تخصص و خدمات -->
+                        <div class="bg-gray-50 leading-8 p-4 my-6 rounded-2xl">
+
+                            <div class="flex flex-col md:flex-row items-center">
+                                <span class="text-sm font-YekanBakh-Bold">فوق تخصص :</span>
+                                <div class="mr-1">{{ item.doctor.doctor.super_speciality }}</div>
+                            </div>
+
+                            <div class="flex flex-col md:flex-row items-center">
+                                <span class="text-sm font-YekanBakh-Bold">خدمات:</span>
+                                {% for service in item.doctor.doctor.services.all %}
+                                <div class="mr-1">
+                                    {{ service.name }}{% if not forloop.last %} -{% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- کلینیک و دکمه -->
+                        <div class="flex flex-col md:flex-row leading-8 items-center justify-between">
+
+                            <div class="flex flex-col md:flex-row items-center mb-6 md:mb-0">
+                                <span class="text-sm font-YekanBakh-Bold">کلینیک :</span>
+                                <div class="mr-1">{{ item.doctor.doctor.clinic.name }}</div>
+                            </div>
+
+                            <div>
+                                <a class="bg-indigo-600 hover:bg-indigo-700 hover:transition hover:duration-700 p-6 py-2 text-center rounded-xl text-white"
+                                   href="{% url 'doctor_detail' %}?doc_id={{ item.doctor.id }}&doc_name={{ item.doctor.first_name }}&doc_last={{ item.doctor.last_name }}&spec={{ item.doctor.doctor.speciality }}&sup_spec={{ item.doctor.doctor.super_speciality }}&pic={{ item.doctor.doctor.pic }}&sec={{ item.doctor.doctor.clinic.name }}">
+                                    دریافت نوبت
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    {% empty %}
+                    <div class="bg-white p-8 rounded-3xl text-center text-gray-500">
+                        موردی برای نمایش پیدا نشد.
+                    </div>
+                    {% endfor %}
+
+
+                    <!-- pagination -->
+                    {% if page_obj.has_other_pages %}
+                    <div class="flex justify-center mt-10">
+                        <div class="join">
+
+                            {% if page_obj.has_previous %}
+                            <a class="join-item btn btn-sm md:btn-md bg-white hover:bg-indigo-600 hover:text-white border border-gray-200"
+                               href="?page={{ page_obj.previous_page_number }}&{{ request.GET.urlencode }}">
+                                قبلی
+                            </a>
+                            {% else %}
+                            <button class="join-item btn btn-sm md:btn-md btn-disabled">قبلی</button>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <button class="join-item btn btn-sm md:btn-md bg-indigo-600 text-white border-indigo-600">
+                                {{ num }}
+                            </button>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a class="join-item btn btn-sm md:btn-md bg-white hover:bg-indigo-600 hover:text-white border border-gray-200"
+                               href="?page={{ num }}&{{ request.GET.urlencode }}">
+                                {{ num }}
+                            </a>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <a class="join-item btn btn-sm md:btn-md bg-white hover:bg-indigo-600 hover:text-white border border-gray-200"
+                               href="?page={{ page_obj.next_page_number }}&{{ request.GET.urlencode }}">
+                                بعدی
+                            </a>
+                            {% else %}
+                            <button class="join-item btn btn-sm md:btn-md btn-disabled">بعدی</button>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <!-- فیلترها -->
+            {% include 'Widgets/search_filters_schedule.html' %}
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

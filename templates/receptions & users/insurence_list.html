@@ -1,0 +1,94 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'css/insurance.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper">
+
+    <div class="doctors-header">
+
+        <div class="search-box">
+            <form method="get">
+                <input name="q" placeholder="جستجوی نام، نوع بیمه..." type="text" value="{{ request.GET.q }}">
+
+                <button class="search-btn" type="submit">🔍</button>
+            </form>
+        </div>
+
+        <a href="{% url 'add_insurance' %}">
+            <button class="add-btn">+ افزودن بیمه</button>
+        </a>
+
+    </div>
+
+    <!-- جدول -->
+    <div class="table-container">
+
+        <table>
+            <thead>
+            <tr>
+                <th>ردیف</th>
+                <th>نام بیمه</th>
+                <th>نوع بیمه</th>
+                <th>وضعیت</th>
+                <th>عملیات</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% if insurances %}
+            {% for insurance in insurances %}
+            <tr>
+                <td data-label="ردیف">{{ forloop.counter }}</td>
+                <td data-label="نام بیمه">{{ insurance.name }}</td>
+                <td data-label="نوع بیمه">{{ insurance.get_type_display }}</td>
+                <td data-label="وضعیت">{{ insurance.get_status_display }}</td>
+                <td data-label="عملیات">
+                    <a class="edit-btn" href="{% url 'edit_insurance' insurance.id %}">
+                        ویرایش
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td class="empty" colspan="5">هیچ بیمه‌ای یافت نشد</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- pagination -->
+    {% if page_obj %}
+    <div class="pagination">
+
+        {% if page_obj.has_previous %}
+        <a href="?page=
+                            {{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+            قبلی
+        </a>
+        {% endif %}
+
+        <span class="current">
+            صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page=
+                            {{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+            بعدی
+        </a>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

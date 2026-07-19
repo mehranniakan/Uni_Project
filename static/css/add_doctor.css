@@ -1,0 +1,477 @@
+/* ROOT WRAPPER */
+.doctor-form {
+    direction: rtl;
+    font-family: Vazirmatn, sans-serif;
+}
+
+/* container فقط داخل فرم */
+.doctor-form .container {
+    width: 95%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* card */
+.doctor-form .card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+}
+
+/* titles */
+.doctor-form .title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0284c7;
+    margin-bottom: 8px;
+}
+
+.doctor-form .subtitle {
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+/* GRID */
+.doctor-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* input group */
+.doctor-form .input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* labels */
+.doctor-form label {
+    font-size: 14px;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+/* inputs */
+.doctor-form input,
+.doctor-form select,
+.doctor-form textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+    transition: .3s;
+}
+
+/* textarea */
+.doctor-form textarea {
+    resize: none;
+    min-height: 110px;
+}
+
+/* focus */
+.doctor-form input:focus,
+.doctor-form select:focus,
+.doctor-form textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, .2);
+}
+
+/* FULL WIDTH */
+.doctor-form .full {
+    grid-column: 1 / -1;
+}
+
+/* SERVICES */
+.doctor-form .services-box {
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    max-height: 180px;
+    overflow-y: auto;
+    background: #f8fafc;
+}
+
+.doctor-form .service-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* STATUS */
+.doctor-form .status-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* BUTTON */
+.doctor-form button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 14px;
+    background: #38bdf8;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.doctor-form button:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .doctor-form .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .doctor-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* قرمز شدن حاشیه فیلد در صورت وجود خطا */
+.doctor-form .field-wrap.has-error input,
+.doctor-form .field-wrap.has-error select,
+.doctor-form .field-wrap.has-error textarea {
+    border: 1px solid #e53935 !important;
+    background-color: #fff8f8;
+}
+
+/* تضمین عدم تداخل با focus state */
+.doctor-form .field-wrap.has-error input:focus,
+.doctor-form .field-wrap.has-error select:focus,
+.doctor-form .field-wrap.has-error textarea:focus {
+    border: 1px solid #e53935 !important;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, .2) !important;
+    background-color: #fff8f8;
+}
+
+/* استایل متن خطای زیر هر فیلد */
+.doctor-form .inline-error {
+    color: #e53935;
+    font-size: 11px;
+    margin-top: 4px;
+    display: block;
+    font-weight: 600;
+    text-align: right;
+    padding-right: 5px;
+}
+
+/* تغییر رنگ لیبل فیلد دارای خطا */
+.doctor-form .field-wrap.has-error label {
+    color: #e53935 !important;
+}
+
+/* استایل برای پیام‌های راهنما (help text) - برای جلوگیری از تداخل */
+.doctor-form .field-wrap .helptext {
+    color: #64748b;
+    font-size: 11px;
+    margin-top: 4px;
+    display: block;
+    text-align: right;
+}
+
+/* استایل برای جدا کردن خطا از help text */
+.doctor-form .field-wrap.has-error .helptext {
+    color: #e53935;
+    font-weight: normal;
+}
+
+/* وضعیت hover برای فیلدهای خطادار */
+.doctor-form .field-wrap.has-error input:hover,
+.doctor-form .field-wrap.has-error select:hover,
+.doctor-form .field-wrap.has-error textarea:hover {
+    border-color: #c62828 !important;
+}
+
+/* استایل برای فایل اینپوت در حالت خطا */
+.doctor-form .field-wrap.has-error input[type="file"] {
+    border-color: #e53935;
+}
+
+.doctor-form .field-wrap.has-error input[type="file"]:focus {
+    border-color: #e53935;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, .2);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .doctor-form .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .doctor-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* responsive adjustments برای خطاها */
+    .doctor-form .inline-error {
+        font-size: 10px;
+    }
+}
+
+.image-upload-box {
+    position: relative;
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    height: 220px;
+    cursor: pointer;
+    overflow: hidden;
+    background: #f8fafc;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-upload-box:hover {
+    border-color: #38bdf8;
+}
+
+/* input file روی کل باکس */
+.image-upload-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* preview image */
+.image-upload-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* placeholder text */
+#uploadPlaceholder {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.w-96.hidden.lg\:block {
+    display: block !important;
+}
+
+#toast_container_nonfield {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    max-width: 90%;
+    direction: rtl;
+}
+
+/* استایل پیام خطا */
+#toast_container_nonfield .nf_toast_message {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+
+    padding: 14px 18px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    max-width: 420px;
+    width: fit-content;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.35);
+    animation: nf_toast_in .35s ease;
+}
+
+#toast_container_nonfield .nf_toast_close {
+    border: none;
+    background: #fff;
+    color: #dc2626;
+
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toast_container_nonfield .nf_toast_close:hover {
+    background: #fee2e2;
+}
+
+@keyframes nf_toast_in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield {
+        top: 20px;
+        bottom: auto;
+
+        right: 50%;
+        transform: translateX(50%);
+
+        width: 90%;
+        align-items: center;
+    }
+
+    #toast_container_nonfield .nf_toast_message {
+        width: 100%;
+        max-width: none;
+    }
+
+}
+
+@keyframes nf_toast_in_desktop {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes nf_toast_in_mobile {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* دسکتاپ */
+#toast_container_nonfield .nf_toast_message {
+    animation: nf_toast_in_desktop .45s cubic-bezier(.22, .68, .36, 1);
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield .nf_toast_message {
+        animation: nf_toast_in_mobile .45s cubic-bezier(.22, .68, .36, 1);
+    }
+
+}
+
+/* ===== CHECKBOX ROW ===== */
+
+/* ===== CHECKBOX ROW RTL ===== */
+
+.doctor-form .checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.doctor-form .checkbox-row label {
+    display: flex;
+    flex-direction: row-reverse; /* چک‌باکس سمت راست */
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    cursor: pointer;
+
+    padding: 8px 0;
+    text-align: right;
+}
+
+.doctor-form .checkbox-row label:hover {
+    background: transparent;
+}
+
+/* checkbox */
+
+.doctor-form .checkbox-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.doctor-form .checkbox-row input[type="checkbox"]:checked {
+    background: #38bdf8;
+    border-color: #38bdf8;
+}
+
+.doctor-form .checkbox-row input[type="checkbox"]:checked::after {
+    content: "✓";
+    color: white;
+    font-size: 12px;
+}
+
+/* responsive */
+
+@media (max-width: 600px) {
+
+    .doctor-form .checkbox-row label {
+        font-size: 13px;
+        padding: 6px 0;
+    }
+
+    .doctor-form .checkbox-row input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+}

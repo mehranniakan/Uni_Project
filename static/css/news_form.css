@@ -1,0 +1,204 @@
+body {
+    font-family: Tahoma, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    box-shadow: none;
+}
+
+h2 {
+    text-align: center;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    color: #333;
+    font-size: 14px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="file"] {
+    padding: 6px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .container {
+        padding: 25px 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+}
+
+#toast_container_nonfield {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    max-width: 90%;
+    direction: rtl;
+}
+
+/* استایل پیام خطا */
+#toast_container_nonfield .nf_toast_message {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+
+    padding: 14px 18px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    max-width: 420px;
+    width: fit-content;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.35);
+    animation: nf_toast_in .35s ease;
+}
+
+#toast_container_nonfield .nf_toast_close {
+    border: none;
+    background: #fff;
+    color: #dc2626;
+
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toast_container_nonfield .nf_toast_close:hover {
+    background: #fee2e2;
+}
+
+@keyframes nf_toast_in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield {
+        top: 20px;
+        bottom: auto;
+
+        right: 50%;
+        transform: translateX(50%);
+
+        width: 90%;
+        align-items: center;
+    }
+
+    #toast_container_nonfield .nf_toast_message {
+        width: 100%;
+        max-width: none;
+    }
+
+}
+
+@keyframes nf_toast_in_desktop {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes nf_toast_in_mobile {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* دسکتاپ */
+#toast_container_nonfield .nf_toast_message {
+    animation: nf_toast_in_desktop .45s cubic-bezier(.22, .68, .36, 1);
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield .nf_toast_message {
+        animation: nf_toast_in_mobile .45s cubic-bezier(.22, .68, .36, 1);
+    }
+
+}

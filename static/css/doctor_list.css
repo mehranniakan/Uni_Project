@@ -1,0 +1,276 @@
+/* Doctors Admin اختصاصی */
+
+.doctors-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.doctors-header input {
+    flex: 1;
+    min-width: 220px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
+    background: #f0f9ff;
+    transition: .25s;
+}
+
+.doctors-header input:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, .2);
+}
+
+.add-btn {
+    border: none;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+    box-shadow: 0 8px 20px rgba(14, 165, 233, .25);
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(14, 165, 233, .35);
+}
+
+/* GRID */
+
+.doctors-grid {
+    display: grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.doctor-card {
+    background: linear-gradient(180deg, #ffffff, #f6fbff);
+    border-radius: 20px;
+    padding: 18px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 0 15px 40px rgba(2, 132, 199, .08);
+    transition: .35s;
+}
+
+.doctor-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 55px rgba(2, 132, 199, .18);
+}
+
+.doctor-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 18px;
+    object-fit: cover;
+    border: 3px solid #e0f2fe;
+}
+
+.doctor-info {
+    flex: 1;
+}
+
+.doctor-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.doctor-specialty {
+    display: inline-block;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #e0f2fe;
+    color: #0284c7;
+    font-weight: 600;
+}
+
+.doctor-sub,
+.doctor-services {
+    font-size: 13px;
+    color: #475569;
+    margin: 2px 0;
+}
+
+.doctor-capacity {
+    margin-top: 4px;
+    font-weight: 700;
+    color: #0ea5e9;
+}
+
+.edit-btn {
+    margin-top: 8px;
+    border: none;
+    background: white;
+    color: #0284c7;
+    padding: 7px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    border: 1px solid #bae6fd;
+    transition: .25s;
+}
+
+.edit-btn:hover {
+    background: #0ea5e9;
+    color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 640px) {
+
+    .doctor-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .doctor-img {
+        width: 110px;
+        height: 110px;
+    }
+
+}
+
+/* Search Box */
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 45px 12px 14px; /* جا برای آیکون */
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
+    background: #f0f9ff;
+    transition: .25s;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px; /* چون RTL هست */
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.search-btn svg {
+    width: 20px;
+    height: 20px;
+    color: #0284c7;
+    transition: .2s;
+}
+
+.search-btn:hover svg {
+    transform: scale(1.15);
+}
+
+.pagination-wrapper {
+    margin-top: 20px; /* فاصله طبیعی از محتوا */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.pagination-info {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.pagination {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.page-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 13px;
+    text-decoration: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.page-btn:hover {
+    background: #e2e8f0;
+}
+
+.page-btn.active {
+    background: #0ea5e9;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.nav-btn {
+    padding: 0 14px;
+    font-weight: 500;
+}
+
+.page-btn.disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+}
+
+.empty-box {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 40px 50px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.empty-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.empty-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #334155;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #64748b;
+}
+

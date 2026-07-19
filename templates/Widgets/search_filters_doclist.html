@@ -1,0 +1,64 @@
+{% load sign_tags %}
+
+<div class="col-span-12 lg:col-span-3 lg:order-1">
+    <div class="bg-white p-4 rounded-3xl mb-4 leading-8 sticky top-0">
+        <div class="p-3 bg-stone-200 rounded-xl mb-4">
+            <h1 class="text-sm font-YekanBakh-Bold">جستجو پیشرفته</h1>
+        </div>
+        <form action="{% url 'doctor_list_pub' %}" method="get">
+
+            <!-- نام پزشک -->
+            <label class="label">
+                <span class="label-text-alt">نام پزشک</span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl placeholder:text-xs"
+                   name="doctor_name"
+                   placeholder="نام پزشک"
+                   type="text"
+                   value="{{ request.GET.doctor_name }}">
+
+            <!-- تخصص -->
+            <label class="label">
+                <span class="label-text-alt">تخصص</span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl placeholder:text-xs"
+                   name="doctor_speciality"
+                   placeholder="تخصص"
+                   type="text"
+                   value="{{ request.GET.doctor_speciality }}">
+
+            <!-- جنسیت -->
+            <label class="label">
+                <span class="label-text-alt">جنسیت</span>
+            </label>
+            <div class="form-control">
+
+                <label class="label cursor-pointer">
+                    <span class="label-text">خانم</span>
+                    <input class="radio checked:bg-red-500"
+                           name="doctor_sex"
+                           type="radio"
+                           value="Female"
+                           {% if request.GET.doctor_sex == "Female" %}checked{% endif %}>
+                </label>
+
+                <label class="label cursor-pointer">
+                    <span class="label-text">آقا</span>
+                    <input class="radio checked:bg-blue-500"
+                           name="doctor_sex"
+                           type="radio"
+                           value="Male"
+                           {% if request.GET.doctor_sex == "Male" %}checked{% endif %}>
+                </label>
+
+            </div>
+
+            <button class="btn bg-stone-800 w-full hover:bg-stone-900 text-white my-3">
+                جستجو
+            </button>
+
+            <a class="btn w-full" href="{% url 'doctor_list_pub' %}">حذف فیلتر</a>
+
+        </form>
+    </div>
+</div>

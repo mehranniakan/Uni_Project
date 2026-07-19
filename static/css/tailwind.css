@@ -1,0 +1,30 @@
+@import url("../../assets/fonts/font.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+    .tab-button.active {
+        @apply bg-orange-200 text-stone-900;
+    }
+
+    .menu li a:hover {
+        @apply bg-transparent rounded-none;
+    }
+
+    .menu li > *:not(ul):not(.menu-title):not(details):active {
+        @apply bg-transparent rounded-none text-stone-900;
+    }
+
+    .menu li details summary:hover {
+        @apply bg-transparent rounded-none text-stone-900;
+    }
+
+    .menu li details summary:active {
+        @apply bg-transparent rounded-none text-stone-900;
+    }
+
+    .menu li img:hover {
+        @apply !bg-transparent rounded-none;
+    }
+}

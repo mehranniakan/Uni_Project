@@ -1,0 +1,138 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+
+{% block title %}مدیریت اخبار{% endblock %}
+{% block header_title %}مدیریت اخبار سایت{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/news_list.css' %}" rel="stylesheet">
+<link href="{% static 'css/alert_style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="news-header">
+
+    <div class="search-wrapper">
+        <form action="{% url 'news_list' %}" class="search-form" method="get">
+
+            <div class="search-input-box">
+                <span class="search-icon">🔍</span>
+
+                <input name="q"
+                       placeholder="جستجوی خبر..."
+                       type="text">
+            </div>
+
+        </form>
+    </div>
+
+    <a href="{% url 'add_news' %}">
+        <button class="add-btn">+ افزودن خبر</button>
+    </a>
+
+</div>
+
+
+<div class="news-wrapper">
+    {% if page_obj %}
+    {% for item in page_obj %}
+
+    <div class="news-card">
+
+        <img class="news-img" src="/media/{{ item.pic }}">
+
+        <div class="news-info">
+
+            <div class="news-title">
+                {{ item.title }}
+            </div>
+
+            <!-- تاریخ فارسی -->
+            <div class="news-date">
+                {{ item.created_date|date:"Y/m/d H:i" }}
+            </div>
+
+            <div class="news-actions">
+
+                <a href="{% url 'edit_news' item.id %}">
+                    <button class="edit-btn">ویرایش</button>
+                </a>
+
+                <form action="{% url 'delete_news' item.id %}"
+                      method="post"
+                      onsubmit="confirmDelete(this)">
+                    {% csrf_token %}
+                    <button class="delete-btn" type="submit">حذف</button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <div class="empty-banner">
+        <div class="empty-box">
+            <div class="empty-icon">📭</div>
+            <div class="empty-title">موردی برای نمایش وجود ندارد</div>
+            <div class="empty-text">در حال حاضر هیچ آیتمی در این بخش ثبت نشده است.</div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% if page_obj %}
+<div class="pagination">
+
+    {% if page_obj.has_previous %}
+    <a href="?page=
+                            {{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+        قبلی
+    </a>
+    {% endif %}
+
+    <span class="current">
+            صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+        </span>
+
+    {% if page_obj.has_next %}
+    <a href="?page=
+                            {{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+        بعدی
+    </a>
+    {% endif %}
+
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function confirmDelete(form, title = "حذف خبر", text = "آیا از حذف این خبر مطمئن هستید؟") {
+
+        event.preventDefault();
+
+        const overlay = document.createElement("div");
+        overlay.className = "modern-alert-overlay";
+
+        overlay.innerHTML = `
+    <div class="modern-alert-box">
+      <div class="modern-alert-title">🗑️ ${title}</div>
+      <div class="modern-alert-text">${text}</div>
+      <div class="modern-alert-actions">
+        <button class="btn-cancel">انصراف</button>
+        <button class="btn-confirm">حذف</button>
+      </div>
+    </div>
+  `;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelector(".btn-cancel").onclick = () => overlay.remove();
+        overlay.querySelector(".btn-confirm").onclick = () => form.submit();
+    }
+</script>
+{% endblock %}

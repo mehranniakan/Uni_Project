@@ -1,0 +1,92 @@
+<nav class="mt-20 pb-6">
+
+    <ul class="menu menu-lg gap-1">
+
+        <li>
+            <a class="sidebar-link" href="{% url 'profile' %}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 8.25V6z" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                پیشخوان
+            </a>
+        </li>
+
+        {% if user.role == 'SuperVisor' %}
+        <li>
+            <a class="sidebar-link" href="{% url 'user_list' %}">
+                👤 مدیریت کاربران
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.role == 'SuperVisor' %}
+        <li>
+            <a class="sidebar-link" href="{% url 'doctor-list' %}">
+                🩺 مدیریت پزشکان
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a class="sidebar-link"
+               href="
+                    {% if user.role == 'User' %}{% url 'reservation_list_user' %}{% else %}{% url 'reservation_list_admin' %}{% endif %}">
+                ⏱ نوبت های رزرو شده
+            </a>
+        </li>
+
+        <li>
+            <a class="sidebar-link" href="{% url 'schedule' %}">
+                📅 برنامه درمانگاه
+            </a>
+        </li>
+
+        {% if user.role == 'SuperVisor' %}
+        <li>
+            <a class="sidebar-link" href="{% url 'insurance_list' %}">
+                🛡 مدیریت بیمه ها
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.role == 'SuperVisor' %}
+        <li>
+            <a class="sidebar-link" href="{% url 'clinic_list' %}">
+                🏥 مدیریت کلینیک ها
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.role == 'SuperVisor' %}
+        <li>
+            <a class="sidebar-link" href="{% url 'news_list' %}">
+                📰 مدیریت اخبار
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.role == 'User' %}
+        <li>
+            <a class="sidebar-link" href="{% url 'dependents_list' %}">
+                👨‍👩‍👧 افراد تحت تکفل
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a class="sidebar-link" href="{% url 'edit_account' pk=user.id %}">
+                ⚙ جزئیات حساب کاربری
+            </a>
+        </li>
+
+        <li class="mt-4">
+            <a class="sidebar-link text-red-500 hover:bg-red-50" href="{% url 'logout' %}">
+                ⏻ خروج
+            </a>
+        </li>
+
+    </ul>
+
+</nav>

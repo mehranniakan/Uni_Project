@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="px-6 mt-4 mb-8">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="bg-white p-3 rounded-3xl mb-4">
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a>خانه</a></li>
+                    <li>تماس با ما</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-white rounded-3xl p-6">
+            <div class="p-3 bg-stone-200 rounded-xl mb-4">
+                <h1 class="text-sm font-YekanBakh-Bold">تماس با ما</h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-14 pt-8">
+                <div>
+                    <p class="mb-4">جهت ارتباط با ما و ارسال نظرات و پیشنهادات خود می توانید از فرم زیر استفاده
+                        نمایید.</p>
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text-alt">موضوع پیام:</span>
+                        </label>
+                        <input class="input input-bordered w-full rounded-xl" type="text"/>
+                        <label class="label">
+                            <span class="label-text-alt">پست الکترونیکی:</span>
+                        </label>
+                        <input class="input input-bordered w-full rounded-xl" type="email"/>
+                        <label class="label">
+                            <span class="label-text-alt">متن پیام:</span>
+                        </label>
+                        <textarea class="textarea textarea-bordered h-24 rounded-xl"
+                                  placeholder="متن پیام را بنویسید..."></textarea>
+                        <button class="btn bg-stone-800 w-36 hover:bg-stone-900 text-white my-3">ارسال پیام</button>
+                    </div>
+                </div>
+                <div>
+                    <div>
+
+                        <div class="flex items-center mb-4">
+                            <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-sm font-YekanBakh-ExtraBold mr-2">آدرس دفتر مرکزی:</h2>
+                            <p class="mr-2"> تهران، عباس آباد، خیابان سهروردی،کوچه عشوری</p>
+
+                        </div>
+                        <div class="flex items-center mb-10">
+                            <div class="bg-indigo-600 text-white rounded-xl rounded-bl-none p-2.5">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-sm font-YekanBakh-ExtraBold mr-2">شماره تماس:</h2>
+                            <p class="mr-2">09125552234 - 02155442222</p>
+
+                        </div>
+
+                        <div class="relative w-full h-60">
+                            <iframe allowfullscreen=""
+                                    aria-hidden="false"
+                                    class="absolute top-0 left-0 w-full h-full rounded-2xl" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25176.71364156464!2d51.32644191808706!3d35.71869708330613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e00491ff3dcd9%3A0xf0b3697c567024bc!2sTehran%2C%20Tehran%20Province%2C%20Iran!5e0!3m2!1sen!2sus!4v1694067154680!5m2!1sen!2sus" style="border:0;"
+                                    tabindex="0">
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

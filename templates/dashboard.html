@@ -1,0 +1,567 @@
+{% load static %}
+{% load compress %}
+<!DOCTYPE html>
+<html dir="rtl" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    {% compress css %}
+    <link href="{% static 'node_modules/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/toast.css' %}" rel="stylesheet">
+    <link href="{% static 'fonts/font.css' %}" rel="stylesheet">
+    {% endcompress %}
+    <title>حساب کاربری</title>
+
+</head>
+{% if user.is_staff %}
+<body class="bg-slate-50 font-YekanBakh-Regular text-sm h-screen">
+<section class="px-6">
+    <div class="container mx-auto max-w-screen-2xl">
+        <div class="bg-white rounded-bl-3xl rounded-br-3xl py-3 px-6">
+            <div class="flex items-center justify-between">
+                <div class="z-30 lg:hidden">
+                    <div class="lg:hidden leading-none z-10">
+                        <div class="drawer">
+                            <input class="drawer-toggle" id="my-drawer-5" type="checkbox"/>
+                            <div class="drawer-content">
+                                <label class="swap swap-rotate drawer-button" for="my-drawer-5">
+
+                                    <!-- this hidden checkbox controls the state -->
+                                    <input type="checkbox"/>
+
+                                    <svg class="w-6 h-6 stroke-black swap-off fill-current" fill="none" stroke="currentColor"
+                                         stroke-width="1.5" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+
+                                    <svg class="w-6 h-6 stroke-black swap-on fill-current" fill="none" stroke="currentColor"
+                                         stroke-width="1.5" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+
+                                </label>
+                            </div>
+                            <div class="drawer-side">
+                                <label class="drawer-overlay" for="my-drawer-5"></label>
+                                <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
+
+                                    <div>
+
+                                        <div class="h-24 bg-indigo-500 relative rounded-xl">
+                                            <div class="text-center absolute right-[6.3rem]">
+                                                <div class="avatar online mt-8">
+                                                    <div class="w-24 rounded-full">
+                                                        <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                                    </div>
+                                                </div>
+
+                                                <h1 class="text-sm font-YekanBakh-Bold mt-4">{{ user.first_name }} {{
+                                                    user.last_name }}</h1>
+                                            </div>
+                                        </div>
+                                        {% include 'Widgets/profile_sidebar_px6.html' %}
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+
+                    <span class="text-sm font-YekanBakh-Bold mr-1">به ویزیت خوش آمدید...</span>
+                </div>
+                <div>
+                    <div class="dropdown dropdown-left dropdown-bottom">
+                        <svg class="w-10 h-10 cursor-pointer m-1 bg-stone-200 p-2 rounded-full" fill="none" stroke="currentColor" stroke-width="1.5"
+                             tabindex="0" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                        </svg>
+
+
+                        <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-xs"
+                            tabindex="0">
+                            <li><a>اطلاعیه شماره 1</a></li>
+                            <li><a>اطلاعیه شماره 2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="px-6 mt-4">
+    <div class="container mx-auto max-w-screen-2xl">
+        <div class="flex gap-4">
+            <div class="w-96 bg-white rounded-3xl overflow-hidden hidden lg:block">
+                <div class="h-24 bg-indigo-500 relative">
+                    <div class="text-center absolute right-[6.3rem]">
+                        <div class="avatar online mt-8">
+                            <div class="w-24 rounded-full">
+                                <img src="../media/docs/def.jpg"/>
+                            </div>
+                        </div>
+
+                        <h1 class="text-sm font-YekanBakh-Bold mt-4">{{ user.first_name }} {{ user.last_name }}</h1>
+                    </div>
+                </div>
+
+                {% include 'Widgets/profile_sidebar_px6_mt4.html' %}
+            </div>
+            <div class="bg-white p-4 lg:p-8 rounded-3xl w-full">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex items-center justify-between bg-indigo-500 rounded-2xl p-6">
+
+                        <div class="leading-8 ml-2 text-white">
+                            <p class="text-sm mb-2 font-YekanBakh-Bold">مشاوره تلفنی</p>
+                            <span class="text-2xl font-YekanBakh-ExtraBold">+2.462</span>
+                        </div>
+                        <div>
+                            <div class="p-4 bg-stone-100 rounded-full">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-indigo-500 rounded-2xl p-6">
+
+                        <div class="leading-8 ml-2 text-white">
+                            <p class="text-sm mb-2 font-YekanBakh-Bold">مشاوره متنی</p>
+                            <span class="text-2xl font-YekanBakh-ExtraBold">+1.263</span>
+                        </div>
+                        <div>
+                            <div class="p-4 bg-stone-100 rounded-full">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-indigo-500 rounded-2xl p-6">
+
+                        <div class="leading-8 ml-2 text-white">
+                            <p class="text-sm mb-2 font-YekanBakh-Bold">نظرات شما</p>
+                            <span class="text-2xl font-YekanBakh-ExtraBold">+269</span>
+                        </div>
+                        <div>
+                            <div class="p-4 bg-stone-100 rounded-full">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-stone-200 rounded-xl my-4">
+                    <h1 class="text-sm font-YekanBakh-Bold">اطلاعیه مهم</h1>
+                </div>
+                <div class="bg-white border p-6 rounded-2xl">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="leading-8 mr-2">
+                            <p class="text-sm font-YekanBakh-Bold">عنوان اطلاعیه خیلی مهم</p>
+                            <span class="text-xs text-stone-500">دوشنبه ۲۰ ام شهریور ۱۴۰۲</span>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                گرافیک
+                                است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                        </div>
+                        <div>
+                            <svg class="w-14 h-14 text-stone-200" fill="none" stroke="currentColor"
+                                 stroke-width="1.5"
+                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="p-3 bg-stone-200 rounded-xl my-4">
+                    <h1 class="text-sm font-YekanBakh-Bold">مشاوره های جدید</h1>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="table text-right">
+                        <!-- head -->
+                        <thead>
+                        <tr>
+
+                            <th>نام کاربر</th>
+                            <th>نوع مشاوره</th>
+                            <th>مبلغ پرداختی</th>
+                            <th>شماره فاکتور</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- row 1 -->
+                        <tr>
+
+                            <td>
+                                <div class="flex items-center space-x-3">
+                                    <div class="avatar ml-1">
+                                        <div class="w-12 rounded-full">
+                                            <img src="{% static 'images/avatar-1.jpg' %}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold mb-2">طاها سکندری</div>
+                                        <div class="text-xs opacity-50">دوشنبه ۲۰ ام شهریور ۱۴۰۲</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge badge-ghost ">مشاوره متنی</span>
+                            </td>
+                            <td>170.000 تومان</td>
+                            <th>
+                                #125697
+                            </th>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <div class="flex items-center space-x-3">
+                                    <div class="avatar ml-1">
+                                        <div class="w-12 rounded-full">
+                                            <img src="{% static 'images/avatar-2.jpg' %}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold mb-2">نسترن صباحی</div>
+                                        <div class="text-xs opacity-50">دوشنبه ۲۰ ام شهریور ۱۴۰۲</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge badge-ghost ">مشاوره تلفنی</span>
+                            </td>
+                            <td>170.000 تومان</td>
+                            <th>
+                                #125697
+                            </th>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if messages %}
+{% for message in messages %}
+<div class="toast-item" id="toast-1">
+    <div class="toast success">
+        <div class="toast-side-bar"></div>
+        <span class="toast-close" onclick="closeToast('toast-1')">×</span>
+        <div class="toast-body">
+            <h3>پیام سیستم</h3>
+            <p>{{ message }}</p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+{% compress js %}
+<script src="{% static 'node_modules/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endcompress %}
+
+</body>
+{% elif not user.is_staff and not user.is_superuser %}
+<body class="bg-slate-50 font-YekanBakh-Regular text-sm h-screen">
+<section class="px-6">
+    <div class="container mx-auto max-w-screen-2xl">
+        <div class="bg-white rounded-bl-3xl rounded-br-3xl py-3 px-6">
+            <div class="flex items-center justify-between">
+                <div class="z-30 lg:hidden">
+                    <div class="lg:hidden leading-none z-10">
+                        <div class="drawer">
+                            <input class="drawer-toggle" id="my-drawer-5" type="checkbox"/>
+                            <div class="drawer-content">
+                                <label class="swap swap-rotate drawer-button" for="my-drawer-5">
+
+                                    <!-- this hidden checkbox controls the state -->
+                                    <input type="checkbox"/>
+
+                                    <svg class="w-6 h-6 stroke-black swap-off fill-current" fill="none" stroke="currentColor"
+                                         stroke-width="1.5" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+
+                                    <svg class="w-6 h-6 stroke-black swap-on fill-current" fill="none" stroke="currentColor"
+                                         stroke-width="1.5" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+
+                                </label>
+                            </div>
+                            <div class="drawer-side">
+                                <label class="drawer-overlay" for="my-drawer-5"></label>
+                                <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
+
+                                    <div>
+
+                                        <div class="h-24 bg-indigo-500 relative rounded-xl">
+                                            <div class="text-center absolute right-[6.3rem]">
+                                                <div class="avatar online mt-8">
+                                                    <div class="w-24 rounded-full">
+                                                        <img src="{% static 'images/avatar-3.jpg' %}"/>
+                                                    </div>
+                                                </div>
+
+                                                <h1 class="text-sm font-YekanBakh-Bold mt-4">{{ user.first_name }} {{
+                                                    user.last_name }}</h1>
+                                            </div>
+                                        </div>
+                                        {% include 'Widgets/profile_sidebar_px6.html' %}
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+
+                    <span class="text-sm font-YekanBakh-Bold mr-1">به ویزیت خوش آمدید...</span>
+                </div>
+                <div>
+                    <div class="dropdown dropdown-left dropdown-bottom">
+                        <svg class="w-10 h-10 cursor-pointer m-1 bg-stone-200 p-2 rounded-full" fill="none" stroke="currentColor" stroke-width="1.5"
+                             tabindex="0" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                        </svg>
+
+
+                        <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-xs"
+                            tabindex="0">
+                            <li><a>اطلاعیه شماره 1</a></li>
+                            <li><a>اطلاعیه شماره 2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="px-6 mt-4">
+    <div class="container mx-auto max-w-screen-2xl">
+        <div class="flex gap-4">
+            <div class="w-96 bg-white rounded-3xl overflow-hidden hidden lg:block">
+                <div class="h-24 bg-indigo-500 relative">
+                    <div class="text-center absolute right-[6.3rem]">
+                        <div class="avatar online mt-8">
+                            <div class="w-24 rounded-full">
+                                <img src="../media/docs/def.jpg"/>
+                            </div>
+                        </div>
+
+                        <h1 class="text-sm font-YekanBakh-Bold mt-4">{{ user.first_name }} {{ user.last_name }}</h1>
+                    </div>
+                </div>
+
+                {% include 'Widgets/profile_sidebar_px6_mt4.html' %}
+            </div>
+            <div class="bg-white p-4 lg:p-8 rounded-3xl w-full">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex items-center justify-between bg-indigo-500 rounded-2xl p-6">
+
+                        <div class="leading-8 ml-2 text-white">
+                            <p class="text-sm mb-2 font-YekanBakh-Bold">مشاوره تلفنی</p>
+                            <span class="text-2xl font-YekanBakh-ExtraBold">+2.462</span>
+                        </div>
+                        <div>
+                            <div class="p-4 bg-stone-100 rounded-full">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-indigo-500 rounded-2xl p-6">
+
+                        <div class="leading-8 ml-2 text-white">
+                            <p class="text-sm mb-2 font-YekanBakh-Bold">مشاوره متنی</p>
+                            <span class="text-2xl font-YekanBakh-ExtraBold">+1.263</span>
+                        </div>
+                        <div>
+                            <div class="p-4 bg-stone-100 rounded-full">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-indigo-500 rounded-2xl p-6">
+
+                        <div class="leading-8 ml-2 text-white">
+                            <p class="text-sm mb-2 font-YekanBakh-Bold">نظرات شما</p>
+                            <span class="text-2xl font-YekanBakh-ExtraBold">+269</span>
+                        </div>
+                        <div>
+                            <div class="p-4 bg-stone-100 rounded-full">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-stone-200 rounded-xl my-4">
+                    <h1 class="text-sm font-YekanBakh-Bold">اطلاعیه مهم</h1>
+                </div>
+                <div class="bg-white border p-6 rounded-2xl">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="leading-8 mr-2">
+                            <p class="text-sm font-YekanBakh-Bold">عنوان اطلاعیه خیلی مهم</p>
+                            <span class="text-xs text-stone-500">دوشنبه ۲۰ ام شهریور ۱۴۰۲</span>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                گرافیک
+                                است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                        </div>
+                        <div>
+                            <svg class="w-14 h-14 text-stone-200" fill="none" stroke="currentColor"
+                                 stroke-width="1.5"
+                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="p-3 bg-stone-200 rounded-xl my-4">
+                    <h1 class="text-sm font-YekanBakh-Bold">مشاوره های جدید</h1>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="table text-right">
+                        <!-- head -->
+                        <thead>
+                        <tr>
+
+                            <th>نام کاربر</th>
+                            <th>نوع مشاوره</th>
+                            <th>مبلغ پرداختی</th>
+                            <th>شماره فاکتور</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- row 1 -->
+                        <tr>
+
+                            <td>
+                                <div class="flex items-center space-x-3">
+                                    <div class="avatar ml-1">
+                                        <div class="w-12 rounded-full">
+                                            <img src="{% static 'images/avatar-1.jpg' %}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold mb-2">طاها سکندری</div>
+                                        <div class="text-xs opacity-50">دوشنبه ۲۰ ام شهریور ۱۴۰۲</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge badge-ghost ">مشاوره متنی</span>
+                            </td>
+                            <td>170.000 تومان</td>
+                            <th>
+                                #125697
+                            </th>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <div class="flex items-center space-x-3">
+                                    <div class="avatar ml-1">
+                                        <div class="w-12 rounded-full">
+                                            <img src="{% static 'images/avatar-2.jpg' %}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold mb-2">نسترن صباحی</div>
+                                        <div class="text-xs opacity-50">دوشنبه ۲۰ ام شهریور ۱۴۰۲</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge badge-ghost ">مشاوره تلفنی</span>
+                            </td>
+                            <td>170.000 تومان</td>
+                            <th>
+                                #125697
+                            </th>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+{% compress js %}
+<script src="{% static 'node_modules/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endcompress %}
+
+</body>
+{% endif %}
+</html>

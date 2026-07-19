@@ -1,0 +1,361 @@
+/* Add Doctor To Schedule - Sky Theme */
+
+.form-card {
+    max-width: 750px;
+    margin: auto;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0369a1;
+}
+
+.form-subtitle {
+    color: #64748b;
+    margin-bottom: 28px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group.full {
+    grid-column: 1/-1;
+}
+
+label {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+input {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
+    background: #f0f9ff;
+    transition: .25s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, .2);
+}
+
+/* live search */
+
+.live-search {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: 105%;
+    right: 0;
+    left: 0;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(2, 132, 199, .15);
+    display: none;
+    max-height: 220px;
+    overflow: auto;
+    z-index: 20;
+}
+
+.result-item {
+    padding: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.result-item:hover {
+    background: #e0f2fe;
+}
+
+.submit-btn {
+    margin-top: 26px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 10px 25px rgba(14, 165, 233, .25);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(14, 165, 233, .35);
+}
+
+@media (max-width: 640px) {
+    .form-card {
+        padding: 0;
+    }
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 42px;
+    direction: rtl;
+    text-align: right;
+}
+
+/* حذف فلش dropdown */
+.select2-selection__arrow {
+    display: none !important;
+}
+
+/* حذف حالت select */
+.select2-selection--single {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    height: 42px !important;
+    padding: 6px !important;
+    display: flex !important;
+    align-items: center;
+}
+
+/* شبیه textbox */
+.select2-search__field {
+    width: 100% !important;
+}
+
+/* وقتی کلیک می‌کنی شبیه input focus شود */
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, .2);
+}
+
+/* بوردر قرمز وقتی خطا دارد */
+.has-error input,
+.has-error select,
+.has-error textarea {
+    border: 1px solid #ef4444 !important;
+}
+
+/* پیام خطا زیر فیلد */
+.field-errors {
+    margin-top: 6px;
+}
+
+.inline-error {
+    display: block;
+    color: #ef4444;
+    font-size: 12px;
+}
+
+/* ===== Custom Status Select ===== */
+
+.custom-select {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
+    background: #f0f9ff;
+    transition: .25s;
+    font-family: inherit;
+    width: 100%;
+    appearance: none;
+    cursor: pointer;
+}
+
+/* فوکوس مشابه input */
+.custom-select:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, .2);
+}
+
+/* فلش سفارشی */
+.input-group {
+    position: relative;
+}
+
+.input-group select.custom-select {
+    padding-left: 32px;
+}
+
+.input-group:has(select.custom-select)::after {
+    content: "▼";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #64748b;
+    pointer-events: none;
+}
+
+/* ===== RTL SweetAlert Toast اصلاح شده ===== */
+.swal2-toast {
+    right: 16px !important; /* پایین سمت راست */
+    left: auto !important;
+    bottom: 16px !important;
+    padding: 12px 16px !important;
+    border-radius: 14px !important;
+    font-family: YekanBakh, sans-serif;
+}
+
+.swal2-toast .swal2-title {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+
+/* Progress Bar آبی آسمانی */
+.swal2-toast .swal2-timer-progress-bar {
+    background: #38bdf8 !important;
+    height: 3px !important;
+}
+
+/* دکمه بستن کوچک‌تر */
+.swal2-toast .swal2-close {
+    font-size: 0.8em !important;
+    top: 4px !important;
+    right: 4px !important;
+}
+
+#toast_container_nonfield {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    max-width: 90%;
+    direction: rtl;
+}
+
+/* استایل پیام خطا */
+#toast_container_nonfield .nf_toast_message {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+
+    padding: 14px 18px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    max-width: 420px;
+    width: fit-content;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.35);
+    animation: nf_toast_in .35s ease;
+}
+
+#toast_container_nonfield .nf_toast_close {
+    border: none;
+    background: #fff;
+    color: #dc2626;
+
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toast_container_nonfield .nf_toast_close:hover {
+    background: #fee2e2;
+}
+
+@keyframes nf_toast_in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield {
+        top: 20px;
+        bottom: auto;
+
+        right: 50%;
+        transform: translateX(50%);
+
+        width: 90%;
+        align-items: center;
+    }
+
+    #toast_container_nonfield .nf_toast_message {
+        width: 100%;
+        max-width: none;
+    }
+
+}
+
+@keyframes nf_toast_in_desktop {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes nf_toast_in_mobile {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(4px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* دسکتاپ */
+#toast_container_nonfield .nf_toast_message {
+    animation: nf_toast_in_desktop .45s cubic-bezier(.22, .68, .36, 1);
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+
+    #toast_container_nonfield .nf_toast_message {
+        animation: nf_toast_in_mobile .45s cubic-bezier(.22, .68, .36, 1);
+    }
+
+}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="px-6 mt-4 mb-8">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="bg-white p-3 rounded-3xl mb-4">
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a>خانه</a></li>
+                    <li>درباره ما</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-white rounded-3xl p-6">
+            <div class="p-3 bg-stone-200 rounded-xl mb-4">
+                <h1 class="text-sm font-YekanBakh-Bold">درباره ما</h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-14 pt-8">
+                <div class="leading-8">
+                    <h2 class="text-lg font-YekanBakh-Bold mb-4">درباره ویزیت بخوانید...</h2>
+
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی
+                        مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه
+                        درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری
+                        را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این
+                        صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و
+                        زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی گیرد.</p>
+                    <p class="mt-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                        گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                        تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+                </div>
+                <div>
+                    <img alt="" class="rounded-2xl" src="{% static 'images/about-2.jpg' %}">
+                </div>
+            </div>
+            <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 rounded-2xl mt-16">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <div class="text-white font-YekanBakh-ExtraBold text-lg">ما را در اینستاگرام دنبال کنید...</div>
+                    <a href="https://instagram.com/rtltheme">
+                        <div class="bg-white py-2 px-8 rounded-lg font-YekanBakh-ExtraBold text-lg">rtl-theme</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

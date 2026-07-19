@@ -1,0 +1,277 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}مدیریت کاربران{% endblock %}
+{% block header_title %}مدیریت کاربران{% endblock %}
+{% block extra_css %}
+<link href="{% static 'css/user_management.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- ================= TABS + SEARCH ================= -->
+{% if search_mode == False %}
+<div class="mb-8">
+
+    <!-- تب‌ها + سرچ (فلکس پدر) -->
+    <div class="flex items-center justify-between flex-wrap gap-4 mb-6 tabs-search-row">
+        <div class="tabs-container">
+
+            {% for item in roles %}
+            <a class="tab-btn {% if current_role == item.key %}active{% endif %}"
+               href="{% url 'user_list' %}?role={{ item.key }}&page=1">
+                {{ item.label }}
+            </a>
+            {% endfor %}
+
+            <a class="tab-btn {% if current_role == 'all' %}active{% endif %}"
+               href="{% url 'user_list' %}?role=all&page=1">
+                همه
+            </a>
+
+        </div>
+
+        <!-- سرچ حرفه‌ای -->
+        <div class="search-wrapper">
+            <form action="{% url 'user_list' %}?page=1" method="get">
+                <input class="search-input" id="search" name="q"
+                       placeholder="جستجوی نام، کدملی، سمت کاری..."
+                       type="text">
+                <input name="page" type="hidden" value="1">
+
+                <button class="search-button" id="searchBtn" type="submit">
+                    <svg class="w-5 h-5"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="m21 21-4.35-4.35m1.85-5.4a7.25 7.25 0 1 1-14.5 0 7.25 7.25 0 0 1 14.5 0Z"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{% else %}
+<div class="mb-8">
+
+    <!-- فقط سرچ در حالت search_mode -->
+    <div class="flex items-center justify-between flex-wrap gap-4 mb-6 tabs-search-row">
+
+        <!-- سرچ حرفه‌ای -->
+        <div class="search-wrapper">
+            <form action="{% url 'user_list' %}?page=1" method="get">
+                <input class="search-input" id="search" name="q"
+                       placeholder="جستجوی نام، کدملی، سمت کاری..."
+                       type="text">
+
+                <button class="search-button" id="searchBtn" type="submit">
+                    <svg class="w-5 h-5"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="m21 21-4.35-4.35m1.85-5.4a7.25 7.25 0 1 1-14.5 0 7.25 7.25 0 0 1 14.5 0Z"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{% endif %}
+
+<!-- لیست کاربران -->
+<div class="users-grid" id="userList">
+
+    {% if users %}
+    {% for item in users %}
+    <div class="user-card">
+
+        <img class="user-img" src="/media/docs/def.jpg">
+
+        <div class="user-info">
+
+            <div class="user-name">
+                {{ item.first_name }} {{ item.last_name }}
+            </div>
+
+            <div class="user-national">
+                کد ملی: {{ item.username }}
+            </div>
+
+            <div class="user-role">
+                سمت: {{ item.get_role_display }}
+            </div>
+
+            <a href="{% url 'user_edit' pk=item.id %}" target="_blank">
+                <button class="edit-btn">ویرایش</button>
+            </a>
+
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-banner">
+
+            <div class="empty-icon">
+                <!-- Warning Icon -->
+                <svg class="w-20 h-20"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 9v4m0 4h.01M10.29 3.86l-7.5 13A1 1 0 003.66 19h16.68a1 1 0 00.87-1.14l-7.5-13a1 1 0 00-1.74 0z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                </svg>
+            </div>
+
+            <h2>موردی یافت نشد</h2>
+            <p>
+                هیچ کاربری مطابق فیلتر یا جستجوی شما پیدا نشد.
+                لطفاً تنظیمات را تغییر دهید.
+            </p>
+
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% if search_mode == False %}
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+
+    <!-- اطلاعات صفحه -->
+    <div class="pagination-info">
+        صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+    </div>
+
+    <div class="pagination">
+
+        <!-- دکمه قبلی -->
+        {% if page_obj.has_previous %}
+        <a class="page-btn nav-btn"
+           href="?page={{ page_obj.previous_page_number }}">
+            قبلی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">قبلی</span>
+        {% endif %}
+
+        <!-- شماره صفحات -->
+        {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+        <span class="page-btn active">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a class="page-btn" href="?page={{ num }}">
+            {{ num }}
+        </a>
+        {% endif %}
+        {% endfor %}
+
+        <!-- دکمه بعدی -->
+        {% if page_obj.has_next %}
+        <a class="page-btn nav-btn"
+           href="?page={{ page_obj.next_page_number }}">
+            بعدی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">بعدی</span>
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+{% else %}
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+
+    <!-- اطلاعات صفحه -->
+    <div class="pagination-info">
+        صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+    </div>
+
+    <div class="pagination">
+
+        <!-- دکمه قبلی -->
+        {% if page_obj.has_previous %}
+        <a class="page-btn nav-btn"
+           href="?user={{ search_value }}&page={{ page_obj.previous_page_number }}">
+            قبلی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">قبلی</span>
+        {% endif %}
+
+        <!-- شماره صفحات -->
+        {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+        <span class="page-btn active">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a class="page-btn" href="?user={{ search_value }}&page={{ num }}">
+            {{ num }}
+        </a>
+        {% endif %}
+        {% endfor %}
+
+        <!-- دکمه بعدی -->
+        {% if page_obj.has_next %}
+        <a class="page-btn nav-btn"
+           href="?user={{ search_value }}&page={{ page_obj.next_page_number }}">
+            بعدی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">بعدی</span>
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const searchInput = document.getElementById('search');
+        const searchBtn = document.getElementById('searchBtn');
+        const cards = document.querySelectorAll('.user-card');
+
+        function filterCards() {
+            const value = (searchInput?.value || "").toLowerCase();
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(value) ? 'flex' : 'none';
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', filterCards);
+        }
+
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function (e) {
+                // اگر نمی‌خواهی سرچ سمت سرور باشد، این را فعال کن
+                // e.preventDefault();
+                filterCards();
+            });
+        }
+
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="mb-12 px-4">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="bg-white p-3 rounded-3xl my-4">
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'main' %}">خانه</a></li>
+                    <li>برنامه حضور پزشکان</li>
+                </ul>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12 lg:col-span-9 lg:order-2">
+                <div class="flex flex-col gap-4">
+                    {% for item in items %}
+                    <div class="bg-white p-8 rounded-3xl">
+                        <div class="flex flex-col lg:flex-row items-center justify-between">
+                            <div class="flex items-center mb-8 lg:mb-0">
+                                <div class="avatar online">
+                                    <div class="w-20 rounded-full">
+                                        <img src="{{ item.doctor.pic.url }}"/>
+                                    </div>
+                                </div>
+                                <div class="mr-4">
+                                    <h3 class="font-YekanBakh-ExtraBold text-base mb-2">{{ item.doctor.first_name }} {{
+                                        item.doctor.last_name }}</h3>
+                                    <p class="text-gray-500">{{ item.doctor.speciality }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="font-YekanBakh-SemiBold">تعداد نوبت باقی مانده : {{ item.available_capacity }}</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 leading-8 p-4 my-6 rounded-2xl">
+                            <div class="flex flex-col md:flex-row items-center">
+                                <span class="text-sm font-YekanBakh-Bold">فوق تخصص :</span>
+                                <div class="mr-1">{{ item.doctor.super_speciality }}</div>
+                            </div>
+                            <div class="flex flex-col md:flex-row items-center">
+                                <span class="text-sm font-YekanBakh-Bold">خدمات :</span>
+                                {% if item.doctor.services.all %}
+
+                                {% for service in item.doctor.services.all %}
+
+                                {% if forloop.last %}
+                                <div class="mr-1">{{ service }}</div>
+                                {% else %}
+                                <div class="mr-1">{{ service }} -</div>
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                <div class="mr-1">خدمات متدوال کلینیک {{ item.doctor.clinic.name }}</div>
+                                {% endif %}
+
+                            </div>
+                            <div class="flex flex-col md:flex-row items-center">
+                                <span class="text-sm font-YekanBakh-Bold">ساعات حضور :</span>
+
+                                <div class="mr-1">{{ item.start_time|time:"H:i" }}
+                                    الی {{ item.end_time|time:"H:i" }}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row leading-8 items-center justify-between">
+                            <div class="flex flex-col md:flex-row items-center mb-6 md:mb-0">
+                                <span class="text-sm font-YekanBakh-Bold">کلینیک : </span>
+                                <div class="mr-1">{{ item.doctor.clinic.name }}</div>
+                            </div>
+                            <div>
+                                <a %} href={% if user.is_authenticated"{% url 'schedule' %}"{% else %}{% url 'login'
+                                %}{% endif %}
+                                class="bg-indigo-600 hover:bg-indigo-700 hover:transition hover:duration-700 p-6 py-2
+                                text-center rounded-xl text-white">دریافت
+                                نوبت</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% include 'Widgets/search_filters_schedule.html' with clinic_name=clinics %}
+        </div>
+    </div>
+</section>
+{% endblock %}

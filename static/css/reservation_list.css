@@ -1,0 +1,238 @@
+/* reservation_list.css */
+
+/* کلیات wrapper */
+.reservation-wrapper {
+    padding: 20px;
+    max-width: 1200px; /* حداکثر عرض برای جلوگیری از کشیدگی زیاد در مانیتورهای بزرگ */
+    margin: 0 auto; /* قرارگیری در وسط صفحه */
+}
+
+/* Grid Layout برای کارت ها */
+.reservation-grid {
+    display: grid;
+    /* کارت ها به صورت خودکار در سطرها قرار می‌گیرند با حداقل عرض 320px */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px; /* فاصله بین کارت‌ها */
+}
+
+/* استایل کلی کارت */
+.reservation-card {
+    background: #ffffff; /* پس‌زمینه سفید */
+    border-radius: 12px; /* گوشه‌های گرد */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* سایه ملایم */
+    overflow: hidden; /* مطمئن شوید که محتوا از گوشه‌های گرد بیرون نزند */
+    border: 1px solid #e0f2fe; /* حاشیه نازک آبی آسمانی */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* انیمیشن برای هاور */
+}
+
+.reservation-card:hover {
+    transform: translateY(-3px); /* کمی بالا آمدن کارت هنگام هاور */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* افزایش سایه هنگام هاور */
+}
+
+/* هدر کارت (نام دکتر و وضعیت) */
+.card-header {
+    background: #38bdf8; /* آبی آسمانی روشن */
+    color: #ffffff; /* متن سفید */
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between; /* پخش شدن آیتم‌ها در دو طرف */
+    align-items: center; /* تراز عمودی آیتم‌ها */
+    font-family: 'Vazirmatn', sans-serif; /* فرض بر استفاده از فونت فارسی */
+}
+
+.doctor {
+    font-weight: 600; /* پررنگ‌تر */
+    font-size: 1.1em;
+}
+
+.status {
+    font-size: 0.85em;
+    padding: 5px 12px;
+    border-radius: 20px; /* گوشه‌های بسیار گرد برای وضعیت */
+    background: #ffffff; /* پس‌زمینه سفید برای وضعیت */
+    font-weight: 500;
+}
+
+/* رنگ‌بندی برای وضعیت‌های مختلف (مثال) */
+.status.pending { /* مثال: اگر وضعیت "در انتظار" باشد */
+    color: #f59e0b;
+}
+
+.status.confirmed { /* مثال: اگر وضعیت "تایید شده" باشد */
+    color: #22c55e;
+}
+
+.status.canceled, .status.closed { /* مثال: برای وضعیت "کنسل شده" یا "بسته شده" */
+    color: #ef4444;
+}
+
+.status.completed { /* مثال: برای وضعیت "انجام شده" */
+    color: #0ea5e9;
+}
+
+
+/* بدنه کارت (اطلاعات جزئی‌تر) */
+.card-body {
+    padding: 18px;
+    font-family: 'Vazirmatn', sans-serif;
+    color: #334155; /* رنگ خاکستری تیره برای متن */
+}
+
+.row {
+    display: flex;
+    justify-content: space-between; /* جدا کردن label و value */
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    border-bottom: 1px dashed #f1f5f9; /* خط چین برای جدا کردن سطرها */
+    padding-bottom: 8px;
+}
+
+.row:last-child {
+    margin-bottom: 0; /* آخرین سطر بدون حاشیه پایین */
+    border-bottom: none; /* آخرین سطر بدون خط چین */
+    padding-bottom: 0;
+}
+
+.label {
+    font-weight: 500;
+    color: #64748b; /* رنگ خاکستری متوسط برای لیبل‌ها */
+    text-align: right;
+    min-width: 90px; /* حداقل عرض برای لیبل‌ها */
+}
+
+.value {
+    text-align: left;
+    flex-grow: 1; /* اجازه رشد به سمت چپ */
+    color: #1e293b;
+}
+
+/* فوتر کارت (دکمه کنسل) */
+.card-footer {
+    padding: 15px 18px;
+    border-top: 1px solid #e2e8f0; /* خط جداکننده از بدنه */
+    text-align: center; /* دکمه در وسط */
+}
+
+/* دکمه کنسل کردن */
+.cancel-btn {
+    background: #ef4444; /* قرمز پررنگ */
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.cancel-btn:hover {
+    background: #dc2626; /* قرمز تیره‌تر هنگام هاور */
+}
+
+.cancel-btn:disabled {
+    background: #b9b9b9;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.cancel-btn.loading::after {
+    content: '...';
+}
+
+.empty-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+}
+
+.empty-box {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 40px 50px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.empty-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.empty-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #334155;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Responsive Design برای موبایل */
+@media (max-width: 768px) {
+    .reservation-wrapper {
+        padding: 15px; /* کاهش پدینگ در موبایل */
+    }
+
+    .reservation-grid {
+        /* در موبایل، کارت‌ها به صورت ستونی نمایش داده می‌شوند */
+        grid-template-columns: 1fr;
+        gap: 15px; /* کاهش فاصله بین کارت‌ها */
+    }
+
+    .card-header {
+        padding: 10px 15px;
+    }
+
+    .doctor {
+        font-size: 1em;
+    }
+
+    .status {
+        font-size: 0.8em;
+        padding: 4px 10px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .row {
+        flex-direction: column; /* در موبایل label و value زیر هم قرار می‌گیرند */
+        align-items: flex-start; /* تراز به سمت راست */
+        gap: 5px; /* فاصله بین label و value */
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+    }
+
+    .label {
+        min-width: unset; /* حذف حداقل عرض در موبایل */
+        font-size: 0.9em;
+        color: #475569;
+    }
+
+    .value {
+        font-size: 1em;
+        color: #1e293b;
+    }
+
+    .card-footer {
+        padding: 12px 15px;
+    }
+
+    .cancel-btn {
+        width: 100%; /* دکمه کنسل تمام عرض را می‌گیرد */
+        padding: 12px;
+        font-size: 1.1em;
+    }
+
+}

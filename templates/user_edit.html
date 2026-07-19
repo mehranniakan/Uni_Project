@@ -1,0 +1,70 @@
+{% extends "base_admin_panel.html" %}
+{% load static %}
+{% load compress %}
+
+{% block title %}ویرایش کاربر{% endblock %}
+{% block header_title %}ویرایش اطلاعات کاربر{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/user_management.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="edit-card mx-auto">
+
+    <!-- Profile -->
+    <div class="profile-section">
+        <img alt="avatar"
+             class="profile-avatar" src="
+                    {% if user_obj.profile_pic %}{{ user_obj.profile_pic.url }}{% else %}{% static 'images/avatar-3.jpg' %}{% endif %}">
+
+        <div class="profile-meta">
+            <h2>{{ user_obj.first_name }} {{ user_obj.last_name }}</h2>
+            <p>{{ user_obj.username }}</p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <form class="edit-form" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>نام</label>
+            <input name="first_name" type="text" value="{{ user_obj.first_name }}">
+        </div>
+
+        <div class="form-group">
+            <label>نام خانوادگی</label>
+            <input name="last_name" type="text" value="{{ user_obj.last_name }}">
+        </div>
+
+        <div class="form-group">
+            <label>کد ملی (نام کاربری)</label>
+            <input name="username" type="text" value="{{ user_obj.username }}">
+        </div>
+
+        <div class="form-group">
+            <label>سمت</label>
+            <select name="role">
+                {% for key, value in user_obj.Role_Choices %}
+                <option %} %}selected{% endif if key user_obj.role== value="{{ key }}" {%>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="switch-wrapper">
+            <input %} %}checked{% endif if name="is_active" type="checkbox" user_obj.is_active {%>
+            <span>کاربر فعال باشد</span>
+        </div>
+
+        <div class="form-actions">
+            <button class="save-btn" type="submit">ذخیره تغییرات</button>
+            <a class="cancel-btn" href="{% url 'user_list' %}">انصراف</a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

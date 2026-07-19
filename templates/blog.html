@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load sign_tags %}
+{% load static %}
+
+{% block content %}
+<section class="px-6 mt-4 mb-8">
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="bg-white p-3 rounded-3xl mb-4">
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'main' %}">خانه</a></li>
+                    <li>وبلاگ</li>
+                </ul>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {% for item in page_obj %}
+            <div class="bg-white p-4 rounded-2xl leading-8">
+                <a href="{% url 'single_news' %}?news_id={{ item.id|sign }}"><img alt=""
+                                                                                  class="rounded-xl"
+                                                                                  src="{{ item.pic.url }}"></a>
+                <div class="">
+                    <a href="single-blog.html"><h3 class="font-YekanBakh-ExtraBold text-base mt-4 mb-2">{{ item.title
+                        }}</h3></a>
+                    <p>{{ item.text|truncatechars:30 }}</p>
+                </div>
+                <div class="flex items-center justify-between border-t border-dashed pt-4 mt-4">
+                    <div>{{ item.created_date }}</div>
+                    <div><a href="{% url 'single_news' %}?news_id={{ item.id|sign }}">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                        </svg>
+                    </a></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="flex justify-center my-12">
+            <div class="join">
+
+                {% if page_obj.has_previous %}
+                <a class="join-item btn" href="?page={{ page_obj.previous_page_number }}">«</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <button class="join-item btn btn-active">{{ num }}</button>
+                {% else %}
+                <a class="join-item btn" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a class="join-item btn" href="?page={{ page_obj.next_page_number }}">»</a>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

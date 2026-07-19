@@ -1,0 +1,353 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load sign_tags %}
+{% load compress %}
+
+{% block title %}برنامه روزانه درمانگاه{% endblock %}
+{% block header_title %}لیست برنامه امروز{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/schedule_admin.css' %}" rel="stylesheet">
+<link href="{% static 'css/schedule_alert.css' %}" rel="stylesheet">
+<link href="{% static 'css/alert_style.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<div class="schedule-header">
+
+    <div class="search-wrapper">
+        <form action="{% url 'schedule' %}" method="get">
+
+            <input name="q"
+                   placeholder="جستجوی پزشک یا کلینیک..."
+                   type="text"
+                   value="{{ request.GET.q }}">
+
+            <button class="search-btn" type="submit">
+                <svg fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.5"
+                     viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="m21 21-4.35-4.35m1.85-5.15a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+        </form>
+    </div>
+
+    {% if request.user.role == 'supervisor' %}
+    <a href="{% url 'add-schedule' %}">
+        <button class="add-btn">+ افزودن برنامه</button>
+    </a>
+    {% if prog %}
+    <a href="{% url 'close_schedule' %}">
+        <button class="close-btn">بستن برنامه امروز</button>
+    </a>
+    {% endif %}
+    {% endif %}
+
+    <div class="alert-overlay" id="reserveAlert">
+        <div class="alert-box">
+            <div class="alert-header">
+                <span>انتخاب دریافت‌کننده نوبت</span>
+                <button class="modal-close-btn" data-close-modal type="button">✕</button>
+            </div>
+
+            <div class="radio-group">
+                <label>
+                    <input checked name="type" type="radio" value="self">
+                    برای خودم
+                </label>
+                {% if subs %}
+                <label>
+                    <input name="type" type="radio" value="family">
+                    افراد تحت تکفل
+                </label>
+                {% endif %}
+
+            </div>
+            {% if subs %}
+            <select id="familySelect">
+                {% for item in subs %}
+                <option value="{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</option>
+                {% endfor %}
+
+            </select>
+            {% endif %}
+
+            <button class="reserve-btn" data-submit-reserve onclick="sendData()" type="button">
+                رزرو نوبت
+            </button>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="clinics-wrapper">
+    {% if schedules %}
+
+    {% for item in schedules %}
+
+    <div class="clinic-card">
+
+        <div class="clinic-title">
+            {{ item.name }}
+        </div>
+
+        <div class="schedule-grid">
+
+            {% for doctor in item.doctors.all %}
+
+            {% for schedule in doctor.user.open_schedules %}
+
+            <div class="schedule-item">
+
+                <img src="{{ doctor.pic.url }}">
+
+                <div class="schedule-info">
+
+                    <div class="doctor-name">
+                        {{ doctor.user.first_name }}
+                        {{ doctor.user.last_name }}
+                    </div>
+
+                    <div class="time">
+                        {{ schedule.start_time|time:"H:i" }}
+                        تا
+                        {{ schedule.end_time|time:"H:i" }}
+                    </div>
+
+                    <div class="capacity">
+                        ظرفیت:
+                        {{ schedule.free_pt_cap }}
+                        بیمار
+                    </div>
+
+                </div>
+
+                <div class="action-buttons">
+
+                    {% if user.role == 'supervisor' %}
+
+                    <a class="edit-btn"
+                       href="{% url 'edit-schedule' pk=schedule.id %}">
+                        ویرایش
+                    </a>
+
+                    {% elif request.user.role == 'patient' %}
+
+                    {% if schedule.free_pt_cap > 0 %}
+
+                    <button
+                            class="edit-btn"
+                            data-reserve-btn
+                            data-schedule-id="{{ schedule.id }}"
+                            type="button">
+
+                        دریافت نوبت
+
+                    </button>
+
+                    {% endif %}
+
+                    {% endif %}
+
+
+                    {% if request.user.role == 'supervisor' %}
+
+                    <form action="{% url 'cancel_schedule' %}" method="post">
+
+                        {% csrf_token %}
+
+                        <input name="pk"
+                               type="hidden"
+                               value="{{ schedule.id|sign }}">
+
+                        <button
+                                H:i
+                                onclick="confirmCancel(
+                                                                event,
+                                                                this.form,
+                                                                'کنسل کردن برنامه',
+                                                                'ایا از کنسل کردن برنامه {{ doctor.user.first_name }} {{ doctor.user.last_name }} ساعت {{ schedule.start_time|time:"
+                                type="submit"
+                        " }} تا {{ schedule.end_time|time:"H:i" }} اطمینان دارید ؟'
+                        )"
+                        class="cancel-btn">
+
+                        کنسل
+
+                        </button>
+
+                    </form>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <div class="empty-banner">
+        <div class="empty-box">
+            <div class="empty-icon">📭</div>
+            <div class="empty-title">
+                موردی برای نمایش وجود ندارد
+            </div>
+            <div class="empty-text">
+                در حال حاضر هیچ پزشکی در این بخش ثبت نشده است.
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block no_compress_js %}
+<script>
+
+    function sendData() {
+        const selectedType = document.querySelector('input[name="type"]:checked').value;
+        let payload = {sch_id: selectedScheduleId};
+
+        if (selectedType === "family") {
+            payload.sub_id = document.getElementById("familySelect").value;
+        }
+
+        fetch("{% url 'set_reservation' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    // ✅ اگر موفق بود، صفحه را ریفرش کن تا پیام موفقیت جنگو نمایش داده شود
+                    window.location.reload();
+                } else {
+                    // ❌ اگر خطا داشت، پیغام خطا را نشان بده (می‌توانی از alert یا toast استفاده کنی)
+                    alert(data.message);
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert("خطایی در برقراری ارتباط با سرور رخ داد.");
+            });
+    }
+
+
+</script>
+{% endblock %}
+
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    function confirmCancel(event, form, title = "حذف", text = "آیا مطمئن هستید؟") {
+        event.preventDefault();
+
+        const overlay = document.createElement("div");
+        overlay.className = "modern-alert-overlay";
+
+        overlay.innerHTML = `
+            <div class="modern-alert-box">
+                <div class="modern-alert-title">🗑️ ${title}</div>
+                <div class="modern-alert-text">${text}</div>
+                <div class="modern-alert-actions">
+                    <button type="button" class="btn-cancel">انصراف</button>
+                    <button type="button" class="btn-confirm">تایید</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelector(".btn-cancel").onclick = () => overlay.remove();
+        overlay.querySelector(".btn-confirm").onclick = () => form.submit();
+    }
+</script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const modal = document.getElementById("reserveAlert");
+        const radios = document.querySelectorAll('input[name="type"]');
+        const select = document.getElementById("familySelect");
+        const closeButtons = document.querySelectorAll("[data-close-modal]");
+        const openButtons = document.querySelectorAll("[data-reserve-btn]");
+
+        // باز کردن مودال
+        openButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                selectedScheduleId = this.getAttribute("data-schedule-id");
+                modal.classList.add("show");
+                document.body.style.overflow = "hidden";
+            });
+        });
+
+        // بستن مودال
+        closeButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                modal.classList.remove("show");
+                document.body.style.overflow = "auto";
+            });
+        });
+
+        // بستن با کلیک بیرون
+        modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                modal.classList.remove("show");
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // تغییر حالت select
+        radios.forEach(r => {
+            r.addEventListener("change", function () {
+
+                if (this.value === "self") {
+                    select.disabled = true;
+                    select.classList.add("disabled-select");
+                } else {
+                    select.disabled = false;
+                    select.classList.remove("disabled-select");
+                }
+
+            });
+        });
+
+        // حالت پیشفرض
+        if (select) {
+            select.disabled = true;
+            select.classList.add("disabled-select");
+        }
+
+    });
+
+</script>
+{% endblock %}
+
+
+

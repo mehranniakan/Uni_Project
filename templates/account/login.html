@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود به سیستم</title>
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+</head>
+
+<body class="login-page" style="background: url('{% static 'images/loginback.png' %}') center/cover no-repeat;">
+
+<div class="login-card">
+
+    <div class="login-left"
+         style="background: url('{% static 'images/loginside.png' %}') center / cover no-repeat;">
+    </div>
+
+    <div class="login-right">
+
+        <h2>ورود به حساب</h2>
+
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="login-row login-field-wrapper
+                        {% if form.username.errors %}has-error{% endif %}">
+                <label>{{ form.username.label_tag }}</label>
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                <div class="field-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="login-row login-field-wrapper
+                        {% if form.password.errors %}has-error{% endif %}">
+                <label>{{ form.password.label_tag }}</label>
+                {{ form.password }}
+                {% for error in form.password.errors %}
+                <div class="field-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <button class="login-btn" type="submit">ورود</button>
+        </form>
+
+        <div class="login-register-link">
+            حساب ندارید؟
+            <a href="{% url 'signup' %}">ثبت نام</a>
+        </div>
+
+    </div>
+
+</div>
+{% if form.non_field_errors %}
+<div class="toast-container">
+    {% for error in form.non_field_errors %}
+    <div class="toast-message">
+        <span class="toast-text">{{ error }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+    setTimeout(() => {
+        document.querySelectorAll(".toast-message").forEach(el => {
+            el.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+            el.style.opacity = "0";
+            el.style.transform = "translateY(10px)";
+            setTimeout(() => el.remove(), 400);
+        });
+    }, 3000);
+</script>
+</body>
+</html>

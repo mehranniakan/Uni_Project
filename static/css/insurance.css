@@ -1,0 +1,165 @@
+body {
+    font-family: Tahoma, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+}
+
+/* layout */
+.page-wrapper {
+    padding: 10px;
+}
+
+@media (min-width: 768px) {
+    .page-wrapper {
+        padding: 20px 30px;
+    }
+}
+
+/* header */
+.doctors-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+    .doctors-header {
+        flex-direction: column;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+}
+
+/* search */
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #dbeafe;
+    background: #f0f9ff;
+}
+
+.search-btn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* add btn */
+.add-btn {
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+}
+
+/* table */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f1f5f9;
+}
+
+th, td {
+    padding: 12px;
+    text-align: right;
+}
+
+/* edit btn */
+.edit-btn {
+    background: #0ea5e9;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+/* empty */
+.empty {
+    text-align: center;
+    padding: 20px;
+}
+
+/* pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.pagination a {
+    background: #0ea5e9;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.pagination .current {
+    font-size: 14px;
+    color: #333;
+}
+
+/* mobile table */
+@media (max-width: 768px) {
+
+    thead {
+        display: none;
+    }
+
+    table, tbody, tr, td {
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        margin-bottom: 12px;
+        padding: 10px;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    td {
+        padding: 6px 0;
+    }
+
+    td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 12px;
+        color: #0284c7;
+        font-weight: bold;
+    }
+
+    .edit-btn {
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+    }
+}

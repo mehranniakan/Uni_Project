@@ -1,0 +1,55 @@
+from django.urls import path
+
+from Receptions.views import (
+    ProfileView,
+    DoctorUpdateView,
+    DoctorCreateView,
+    DoctorListView,
+    UserListView,
+    UserUpdateView,
+    InsuranceListView,
+    InsuranceCreateView,
+    InsuranceUpdateView,
+    ClinicListView,
+    ClinicUpdateView,
+    ClinicCreateView,
+    ScheduleListView,
+    ScheduleCreateView,
+    ScheduleUpdateView,
+    close_schedule,
+    cancel_schedule,
+    NewsListView,
+    NewsCreateView,
+    NewsUpdateView,
+    NewsDeleteView,
+)
+
+urlpatterns = [
+    path("dashboard/", ProfileView.as_view(), name="profile"),
+    path("doctor/edit/<uuid:pk>/", DoctorUpdateView.as_view(), name="edit_doctors"),
+    path("doctor/add/", DoctorCreateView.as_view(), name="add_doctors"),
+    path("doctor/list/", DoctorListView.as_view(), name="doctor-list"),
+    path("user/list/", UserListView.as_view(), name="user_list"),
+    path("users/edit/<uuid:pk>/", UserUpdateView.as_view(), name="user_edit"),
+    path("insurance/list/", InsuranceListView.as_view(), name="insurance_list"),
+    path("insurance/add/", InsuranceCreateView.as_view(), name="add_insurance"),
+    path(
+        "insurance/edit/<uuid:pk>/",
+        InsuranceUpdateView.as_view(),
+        name="edit_insurance",
+    ),
+    path("clinic/list/", ClinicListView.as_view(), name="clinic_list"),
+    path("clinic/add/", ClinicCreateView.as_view(), name="add_clinic"),
+    path("clinic/edit/<uuid:pk>/", ClinicUpdateView.as_view(), name="edit_clinic"),
+    path("schedule/", ScheduleListView.as_view(), name="schedule"),
+    path("schedule/close/", close_schedule, name="close_schedule"),
+    path("schedule/cancel/", cancel_schedule, name="cancel_schedule"),
+    path("schedule/add/", ScheduleCreateView.as_view(), name="add-schedule"),
+    path(
+        "schedule/edit/<uuid:pk>/", ScheduleUpdateView.as_view(), name="edit-schedule"
+    ),
+    path("News/list/", NewsListView.as_view(), name="news_list"),
+    path("News/add/", NewsCreateView.as_view(), name="add_news"),
+    path("News/edit/<uuid:pk>/", NewsUpdateView.as_view(), name="edit_news"),
+    path("News/delete/<uuid:pk>/", NewsDeleteView.as_view(), name="delete_news"),
+]

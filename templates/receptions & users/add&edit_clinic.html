@@ -1,0 +1,62 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}{% if action == 'Add' %}افزودن کلینیک{% else %}ویرایش کلینیک{% endif %}{% endblock %}
+{% block extra_css %}
+<link href="{% static 'css/add_doctor.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% if form.non_field_errors %}
+<div id="toast_container_nonfield">
+    {% for error in form.non_field_errors %}
+    <div class="nf_toast_message">
+        <div class="nf_toast_text">{{ error }}</div>
+        <button class="nf_toast_close" type="button">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="doctor-form">
+    <div class="container">
+        <div class="card">
+
+            <div class="title">{% if action == 'Add' %}افزودن کلینیک{% else %}ویرایش کلینیک{% endif %}</div>
+            <div class="subtitle">{% if action == 'Add' %}اطلاعات کلینیک جدید را وارد کنید{% else %}
+                اطلاعات کلینیک را وبرایش کنید{% endif %}
+            </div>
+
+            <form action="{% if action == 'Edit' %} {% url 'edit_clinic' pk=form.instance.pk %} {% else %} {% url 'add_clinic' %} {% endif %}"
+                  method="post">
+
+                {% csrf_token %}
+
+                <div class="form-grid{% if field.errors %} has-error{% endif %}">
+
+                    <div class="input-group">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+
+                        {% if form.name.errors %}
+                        {% for error in form.name.errors %}
+                        <span class="inline-error">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="input-group">
+                        {{ form.type.label_tag }}
+                        {{ form.type }}
+                    </div>
+
+                </div>
+
+                <button type="submit">ثبت کلینیک</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

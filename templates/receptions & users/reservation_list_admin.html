@@ -1,0 +1,422 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load jformat %}
+{% load compress %}
+
+{% block extra_css %}
+<link href="{% static 'css/reservation_list_admin.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+مدیریت نوبت ها
+{% endblock %}
+
+{% block header_title %}
+مدیریت نوبت ها
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-wrapper">
+    <div class="page-header">
+        <div class="page-header-top">
+            <div>
+                <h1 class="page-title">لیست نوبت‌های رزرو شده</h1>
+                <p class="page-subtitle">مدیریت، جستجو و بررسی نوبت‌های ثبت‌شده کاربران</p>
+            </div>
+
+            <div class="stats-box">
+                <div class="mini-stat">
+                    <div class="label">تعداد کل</div>
+                    <div class="value">{{ page_obj.paginator.count }}</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="label">صفحه فعلی</div>
+                    <div class="value">{{ page_obj.number }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <div class="tabs">
+                <a class="tab-link {% if status_filter == 'pending' or not status_filter %}active{% endif %}"
+                   href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}status=pending">
+                    در دست اقدام
+                </a>
+
+                <a class="tab-link {% if status_filter == 'answered' %}active{% endif %}"
+                   href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}status=answered">
+                    انجام شده
+                </a>
+                <a class="tab-link {% if status_filter == 'cancelled' %}active{% endif %}"
+                   href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}status=cancelled">
+                    کنسل شده
+                </a>
+            </div>
+
+            <form action="{% url 'reservation_list_admin' %}" class="search-form" method="get">
+                <input name="status" type="hidden" value="{{ status_filter|default:'pending' }}">
+                <div class="search-box">
+                    <input name="q"
+                           placeholder="جستجو بر اساس کدملی، پزشک..."
+                           type="text"
+                           value="{{ request.GET.q|default:'' }}">
+                    <svg class="search-icon" fill="none" viewBox="0 0 24 24">
+                        <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-linecap="round"
+                              stroke-width="2"></path>
+                        <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"></circle>
+                    </svg>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="content-card">
+        {% if page_obj.object_list %}
+        <!-- Desktop Table -->
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>نام و نام خانوادگی</th>
+                    <th>کدملی</th>
+                    <th>فرد تحت تکفل</th>
+                    <th>مشخصات برنامه</th>
+                    <th>کلینیک</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in page_obj %}
+                <tr>
+                    <td>
+                        <div class="person-name">{{ item.user.first_name }} {{ item.user.last_name }}</div>
+                        <div class="sub-text">
+                            {% if item.user.mobile_number %}{{ item.user.mobile_number }}{% else %}شماره
+                            تماس ثبت
+                            نشده{% endif %}
+                        </div>
+                    </td>
+                    <td>{{ item.user.username }}</td>
+                    <td>
+                        {% if item.sub_user.first_name %}
+                        {{ item.sub_user.first_name }} {{ item.sub_user.last_name }}
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="person-name"
+                             style="font-size:14px;">{{ item.schedule.doctor.first_name }} {{
+                            item.schedule.doctor.last_name }}
+                        </div>
+                        <div class="sub-text">
+                            {{ item.schedule.schedule_date|jformat:"%Y/%m/%d" }}
+                            ساعت :{{ item.schedule.start_time|time:"H:i" }}تا
+                            {{ item.schedule.end_time|time:"H:i" }}
+                        </div>
+                    </td>
+                    <td>{{ item.schedule.doctor.doctor.clinic.name }}
+                    </td>
+                    <td>
+                        {% if item.status == 'pending' %}
+                        <span class="badge pending">در دست اقدام</span>
+
+                        {% elif item.status == 'answered' %}
+                        <span class="badge done">انجام شده</span>
+
+                        {% else %}
+                        <span class="badge cancel">کنسل شده</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn btn-view toggle-details" data-target="details-{{ item.id }}"
+                                    type="button">
+                                مشاهده
+                            </button>
+
+                            {% if item.status != 'answered' and item.status != 'cancelled' %}
+
+                            <form action="{% url 'reservation_apply' %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-complete" name='pk' type="submit"
+                                        value="{{ item.id }}">
+                                    تکمیل عملیات
+                                </button>
+                            </form>
+
+                            {% else %}
+                            <button class="btn btn-complete" disabled type="button">
+                                تکمیل شده
+                            </button>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="details-row" id="details-{{ item.id }}">
+                    <td colspan="7">
+                        <div class="details-box">
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">نام و نام خانوادگی</div>
+                                    <div class="detail-value">{{ item.user.first_name }} {{ item.user.last_name }}</div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">کدملی</div>
+                                    <div class="detail-value">{{ item.user.username }}</div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">شماره تماس</div>
+                                    <div class="detail-value">
+                                        {% if item.user.mobile_number %}
+                                        {{ item.user.mobile_number }}{% else %}
+                                        -{% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">فرد تحت تکفل</div>
+                                    <div class="detail-value">
+                                        {% if item.sub_user.first_name %}{{ item.sub_user.first_name }}
+                                        {{ item.sub_user.last_name }}{% else %}
+                                        -{% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">مشخصات برنامه</div>
+                                    <div class="detail-value">{{ item.schedule.doctor.first_name }} {{
+                                        item.schedule.doctor.last_name }}
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">تاریخ / زمان برنامه</div>
+                                    <div class="detail-value">
+                                        {{ item.schedule.schedule_date|jformat:"%Y/%m/%d" }}
+                                        ساعت :{{ item.schedule.start_time|time:"H:i" }}تا
+                                        {{ item.schedule.end_time|time:"H:i" }}
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">بیمه پایه</div>
+                                    <div class="detail-value">{{ item.user.patient.insurance_base }}
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">بیمه تکمیلی</div>
+                                    <div class="detail-value">
+                                        {{ item.user.patient.insurance_supp }}
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-label">بیمه فول درمان</div>
+                                    <div class="detail-value">
+                                        {% if item.user.insurance_full %}
+                                        {{ item.user.insurance_full }}{% else %}ندارد{% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="mobile-cards">
+            {% for item in page_obj %}
+            <div class="reservation-card">
+                <div class="reservation-card-header">
+                    <div>
+                        <div class="reservation-card-title">{{ item.user.first_name }} {{ item.user.last_name }}</div>
+                        <div class="sub-text">کدملی: {{ item.user.username }}</div>
+                    </div>
+
+                    <div>
+                        {% if item.status == 'answered' %}
+                        <span class="badge done">انجام شده</span>
+                        {% elif item.status == 'pending' %}
+                        <span class="badge pending">در دست اقدام</span>
+                        {% else %}
+                        <span class="badge done">کنسل شده</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="reservation-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">فرد تحت تکفل</div>
+                        <div class="meta-value">
+                            {% if item.sub_user.first_name %}{{ item.sub_user.first_name }}
+                            {{ item.sub_user.last_name }}{% else %}-{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="meta-item">
+                        <div class="meta-label">مشخصات برنامه</div>
+                        <div class="meta-value">{{ item.schedule.doctor.first_name }} {{ item.schedule.doctor.last_name
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="meta-item">
+                        <div class="meta-label">کلینیک</div>
+                        <div class="meta-value">{{ item.schedule.doctor.clinic.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mobile-actions">
+                    <button class="btn btn-view toggle-mobile-details" data-target="mobile-details-{{ item.id }}"
+                            type="button">
+                        مشاهده
+                    </button>
+
+                    {% if item.status != 'answered' %}
+                    <form action="{% url 'reservation_apply' %}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-complete" name='pk' type="submit" value="{{ item.id }}">
+                            تکمیل عملیات
+                        </button>
+                    </form>
+                    {% else %}
+                    <button class="btn btn-complete" disabled type="button">
+                        تکمیل شده
+                    </button>
+                    {% endif %}
+                </div>
+
+
+                <div class="mobile-details" id="mobile-details-{{ item.id }}">
+                    <div class="reservation-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">کدملی</div>
+                            <div class="meta-value">
+                                {{ item.user.username }}
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">شماره تماس</div>
+                            <div class="meta-value">
+                                {% if item.user.mobile_number %}{{ item.user.mobile_number }}{% else %}
+                                -{% endif %}
+                            </div>
+                        </div>
+
+                        <div class="meta-item">
+                            <div class="meta-label">تاریخ / زمان برنامه</div>
+                            <div class="meta-value">
+
+                                {{ item.schedule.schedule_date|jformat:"%Y/%m/%d" }}
+                                ساعت : {{ item.schedule.start_time|time:"H:i" }} تا
+                                {{ item.schedule.end_time|time:"H:i" }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrap">
+            <div class="pagination-info">
+                نمایش صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+            </div>
+
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                <a class="page-btn"
+                   href="?status={{ status_filter }}&q={{ search_query|default:'' }}&page=1">اول</a>
+                <a class="page-btn"
+                   href="?status={{ status_filter }}&q={{ search_query|default:'' }}&page={{ page_obj.previous_page_number }}">قبلی</a>
+                {% else %}
+                <span class="page-btn disabled">اول</span>
+                <span class="page-btn disabled">قبلی</span>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                {% if page_obj.number == num %}
+                <span class="page-btn active">{{ num }}</span>
+                {% else %}
+                <a class="page-btn"
+                   href="?status={{ status_filter }}&q={{ search_query|default:'' }}&page={{ num }}">{{ num }}</a>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a class="page-btn"
+                   href="?status={{ status_filter }}&q={{ search_query|default:'' }}&page={{ page_obj.next_page_number }}">بعدی</a>
+                <a class="page-btn"
+                   href="?status={{ status_filter }}&q={{ search_query|default:'' }}&page={{ page_obj.paginator.num_pages }}">آخر</a>
+                {% else %}
+                <span class="page-btn disabled">بعدی</span>
+                <span class="page-btn disabled">آخر</span>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            موردی برای نمایش وجود ندارد.
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const desktopToggleButtons = document.querySelectorAll('.toggle-details');
+        desktopToggleButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const targetRow = document.getElementById(targetId);
+
+                if (targetRow) {
+                    targetRow.classList.toggle('open');
+                    this.textContent = targetRow.classList.contains('open') ? 'بستن' : 'مشاهده';
+                }
+            });
+        });
+
+        const mobileToggleButtons = document.querySelectorAll('.toggle-mobile-details');
+        mobileToggleButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const targetBox = document.getElementById(targetId);
+
+                if (targetBox) {
+                    targetBox.classList.toggle('open');
+                    this.textContent = targetBox.classList.contains('open') ? 'بستن' : 'مشاهده';
+                }
+            });
+        });
+    });
+    const searchInput = document.querySelector('input[name="q"]');
+
+    searchInput.addEventListener('input', function () {
+        if (this.value === '') {
+            this.form.submit();
+        }
+    });
+</script>
+{% endblock %}

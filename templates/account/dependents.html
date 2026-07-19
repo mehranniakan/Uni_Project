@@ -1,0 +1,63 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}افراد تحت تکفل{% endblock %}
+{% block header_title %}افراد تحت تکفل{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/dependents.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block no_compress_css %}
+{#
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600&display=swap" rel="stylesheet">#}
+{% endblock %}
+
+{% block content %}
+<div class="dep-widget" dir="rtl">
+    <div class="dep-container">
+
+        <div class="dep-header">
+            <div class="dep-title">افراد تحت تکفل</div>
+
+            <div class="dep-controls">
+                <input class="dep-search" placeholder="جستجو...">
+                <a href="{% url 'add_dependents' %}">
+                    <button class="dep-add-btn">➕ افزودن</button>
+                </a>
+            </div>
+        </div>
+        {% if subs %}
+        <div class="dep-list">
+            {% for item in subs %}
+            <div class="dep-card">
+                <div class="dep-card-header">
+                    <div class="dep-avatar">{{ item.first_name|slice:':1' }}</div>
+                    <div>
+                        <div class="dep-name">{{ item.first_name }} {{ item.last_name }}</div>
+                        <div class="dep-info">{{ item.get_relation_display }}</div>
+                    </div>
+                </div>
+
+                <div class="dep-card-footer">
+                    <a href="{% url 'edit_dependents' item.id %}">
+                        <button class="dep-edit-btn">✏️ ویرایش</button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-banner">
+            <div class="empty-box">
+                <div class="empty-icon">📭</div>
+                <div class="empty-title">موردی برای نمایش وجود ندارد</div>
+                <div class="empty-text">در حال حاضر هیچ فردی در این بخش ثبت نشده است.</div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

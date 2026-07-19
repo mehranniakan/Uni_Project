@@ -1,0 +1,191 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}مدیریت پزشکان{% endblock %}
+{% block header_title %}مدیریت پزشکان{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/doctor_list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="doctors-header">
+
+    <div class="search-box">
+
+        <form action="{% url 'doctor-list' %}" method="get">
+            {% csrf_token %}
+            <input id="search" name='q' placeholder="جستجوی نام، نام خانوادگی..." type="text">
+            <input name="page" type="hidden" value="1">
+
+            <button class="search-btn" id="searchBtn" type="button">
+                <!-- Heroicons Search -->
+                <svg fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="m21 21-4.35-4.35m1.85-5.4a7.25 7.25 0 1 1-14.5 0 7.25 7.25 0 0 1 14.5 0Z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                </svg>
+            </button>
+        </form>
+    </div>
+
+    <a href="{% url 'add_doctors' %}">
+        <button class="add-btn">+ افزودن پزشک</button>
+    </a>
+
+</div>
+
+<div class="doctors-grid" id="doctorList">
+    {% if doctors %}
+    {% for item in doctors %}
+    <div class="doctor-card">
+        <img class="doctor-img" src="/media/{{ item.doctor.pic }}">
+
+        <div class="doctor-info">
+
+            <div class="doctor-name">{{ item.first_name }} {{ item.last_name }}</div>
+
+            <div class="doctor-specialty">{{ item.doctor.clinic | truncatechars:25 }}</div>
+
+            <div class="doctor-sub">{{ item.doctor.speciality | truncatechars:30 }}</div>
+
+
+            {% if item.super_speciality %}
+            <div class="doctor-sub">{{ item.doctor.super_speciality | truncatechars:30 }}</div>
+            {% else %}
+            <div class="doctor-services"> خدمات
+                : {{ item.doctor.services.all|join:"، "|truncatechars:20 }}
+            </div>
+            {% endif %}
+            <div class="doctor-capacity">ظرفیت روزانه: {{ item.doctor.pt_cap }} بیمار</div>
+
+            <a href="{% url 'edit_doctors' pk=item.id %}">
+                <button class="edit-btn">ویرایش</button>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="empty-banner">
+        <div class="empty-box">
+            <div class="empty-icon">📭</div>
+            <div class="empty-title">موردی برای نمایش وجود ندارد</div>
+            <div class="empty-text">در حال حاضر هیچ آیتمی در این بخش ثبت نشده است.</div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% if search_mode == False %}
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+
+    <!-- اطلاعات صفحه -->
+    <div class="pagination-info">
+        صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+    </div>
+
+    <div class="pagination">
+
+        <!-- دکمه قبلی -->
+        {% if page_obj.has_previous %}
+        <a class="page-btn nav-btn"
+           href="?page={{ page_obj.previous_page_number }}">
+            قبلی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">قبلی</span>
+        {% endif %}
+
+        <!-- شماره صفحات -->
+        {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+        <span class="page-btn active">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a class="page-btn" href="?page={{ num }}">
+            {{ num }}
+        </a>
+        {% endif %}
+        {% endfor %}
+
+        <!-- دکمه بعدی -->
+        {% if page_obj.has_next %}
+        <a class="page-btn nav-btn"
+           href="?page={{ page_obj.next_page_number }}">
+            بعدی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">بعدی</span>
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+{% else %}
+{% if page_obj.has_other_pages %}
+<div class="pagination-wrapper">
+
+    <!-- اطلاعات صفحه -->
+    <div class="pagination-info">
+        صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+    </div>
+
+    <div class="pagination">
+
+        <!-- دکمه قبلی -->
+        {% if page_obj.has_previous %}
+        <a class="page-btn nav-btn"
+           href="?q={{ search_value }}&page={{ page_obj.previous_page_number }}">
+            قبلی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">قبلی</span>
+        {% endif %}
+
+        <!-- شماره صفحات -->
+        {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+        <span class="page-btn active">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a class="page-btn" href="?q={{ search_value }}&page={{ num }}">
+            {{ num }}
+        </a>
+        {% endif %}
+        {% endfor %}
+
+        <!-- دکمه بعدی -->
+        {% if page_obj.has_next %}
+        <a class="page-btn nav-btn"
+           href="?q={{ search_value }}&page={{ page_obj.next_page_number }}">
+            بعدی
+        </a>
+        {% else %}
+        <span class="page-btn disabled">بعدی</span>
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    const searchInput = document.getElementById('search');
+
+    searchInput.addEventListener('input', function () {
+        const value = this.value.toLowerCase();
+
+        document.querySelectorAll('.doctor-card').forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = text.includes(value) ? 'flex' : 'none';
+        })
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'css/insurance.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="w-full">
+
+    <div class="doctors-header">
+
+        <div class="search-box">
+
+            <form action="{% url 'clinic_list' %}" method="get">
+                <input id="search" name='q' placeholder="جستجوی نام کیلینیک ..." type="text">
+
+                <button class="search-btn" id="searchBtn" type="button">
+                    <!-- Heroicons Search -->
+                    <svg fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="m21 21-4.35-4.35m1.85-5.4a7.25 7.25 0 1 1-14.5 0 7.25 7.25 0 0 1 14.5 0Z"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <a href="{% url 'add_clinic' %}">
+            <button class="add-btn">+ افزودن کلینیک</button>
+        </a>
+
+    </div>
+
+
+    <!-- جدول بیمه -->
+    <div class="mt-8 bg-white rounded-xl border border-stone-200 overflow-hidden">
+
+        <div class="overflow-x-auto">
+            <table class="table table-zebra w-full text-sm">
+
+                <thead class="bg-stone-50">
+                <tr>
+                    <th class="text-center">ردیف</th>
+                    <th>نام کیلینیک</th>
+                    <th>نوع کیلینیک</th>
+                    <th class="text-center">عملیات</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% if clinics %}
+                {% for clinic in clinics %}
+                <tr>
+
+                    <td class="text-center">
+                        {{ forloop.counter }}
+                    </td>
+
+                    <td class="font-medium">
+                        {{ clinic.name }}
+                    </td>
+
+                    <td>
+                        {{ clinic.get_type_display }}
+                    </td>
+
+                    <td class="text-center">
+                        <a class="btn btn-xs flex items-center gap-1 edit-btn"
+                           href="{% url 'edit_clinic' clinic.id %}">
+
+                            <svg class="w-4 h-4"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.5"
+                                 viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.862 4.487l1.651-1.652a1.875
+                     1.875 0 112.652 2.652L6.832 19.82 3 21l1.18-3.832L16.862 4.487z"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+
+                            ویرایش
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+                {% else %}
+                <tr>
+                    <td class="text-center py-6 text-stone-500"
+                        colspan="5">
+
+                        هیچ کلینیکی یافت نشد
+                    </td>
+                </tr>
+                {% endif %}
+
+                </tbody>
+
+            </table>
+        </div>
+
+
+        <!-- صفحه‌بندی -->
+        {% if page_obj %}
+        <div class="p-4 border-t border-stone-200 flex justify-center">
+
+            <div class="join">
+
+                {% if page_obj.has_previous %}
+                <a class="btn btn-sm join-item"
+                   href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                    قبلی
+                </a>
+                {% endif %}
+
+                <button class="btn btn-sm join-item btn-ghost">
+                    صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+                </button>
+
+                {% if page_obj.has_next %}
+                <a class="btn btn-sm join-item"
+                   href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                    بعدی
+                </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}ویرایش حساب کاربری{% endblock %}
+
+{% block content %}
+<div class="p-3 bg-stone-200 rounded-xl mb-4">
+    <h1 class="text-sm font-YekanBakh-Bold">ویرایش حساب کاربری</h1>
+</div>
+<form action="{% url 'edit_account' %}" method="POST">
+    {% csrf_token %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <label class="label">
+                <span class="label-text-alt">نام:</span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl" name='firstname' type="text"
+                   value="{{ first_name }}"/>
+        </div>
+        <div>
+            <label class="label">
+                <span class="label-text-alt">نام خانوادگی:</span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl" name='lastname' type="text"
+                   value="{{ last_name }}"/>
+        </div>
+        <div>
+            <label class="label">
+                <span class="label-text-alt">کدملی :</span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl" name='n_code' type="text"
+                   value="{{ n_id }}"/>
+        </div>
+        <div>
+            <label class="label">
+                <span class="label-text-alt">تاریخ تولد : </span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl" name='b_date' type="date"
+                   value="{{ birth_date|date:'Y-m-d' }}"/>
+        </div>
+        <div>
+            <label class="label">
+                <span class="label-text-alt">آدرس :</span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl" name="address" type="text"
+                   value="{{ address }}"/>
+        </div>
+        <div>
+            <label class="label">
+                <span class="label-text-alt">شماره موبایل:</span>
+            </label>
+            <input class="input input-bordered w-full rounded-xl" name="mobile" type="text"
+                   value="{{ mobile }}"/>
+        </div>
+        <div>
+            <label class="label">
+                <span class="label-text-alt">جنسیت:</span>
+            </label>
+            <div class="form-control">
+                <label class="label cursor-pointer">
+                    <span class="label-text">خانم</span>
+                    {% if sex == 'Female' %}
+                    <input checked class="radio checked:bg-red-500" name="sex" type="radio"
+                           value="female"/>
+                    {% else %}
+                    <input class="radio checked:bg-red-500" name="sex" type="radio" value="female"/>
+                    {% endif %}
+                </label>
+            </div>
+            <div class="form-control">
+                <label class="label cursor-pointer">
+                    <span class="label-text">آقا</span>
+                    {% if sex == 'Male' %}
+                    <input checked class="radio checked:bg-blue-500" name="sex" type="radio"
+                           value="male"/>
+                    {% else %}
+                    <input class="radio checked:bg-blue-500" name="sex" type="radio" value="male"/>
+                    {% endif %}
+                </label>
+            </div>
+        </div>
+        <button class="btn bg-stone-800 w-36 hover:bg-stone-900 text-white my-3" type="submit">ذخیره
+            تغییرات
+        </button>
+    </div>
+</form>
+{% endblock %}

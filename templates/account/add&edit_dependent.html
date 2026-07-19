@@ -1,0 +1,147 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+
+{% block title %}{% if action == 'Add' %}افزودن فرد تحت تکفل{% else %}ویرایش فرد تحت تکفل{% endif %}{% endblock %}
+{% block header_title %}{% if action == 'Add' %}افزودن فرد تحت تکفل{% else %}ویرایش فرد تحت تکفل
+{% endif %}{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/dependent_form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block no_compress_css %}
+<link href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% if form.non_field_errors %}
+<div id="toast_container_nonfield">
+    {% for error in form.non_field_errors %}
+    <div class="nf_toast_message">
+        <div class="nf_toast_text">{{ error }}</div>
+        <button class="nf_toast_close" type="button">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="dep-form-widget" dir="rtl">
+
+    <form method="post">
+
+        <div class="dep-form-card">
+
+            <div class="dep-form-title">افزودن فرد تحت تکفل</div>
+
+            <div class="dep-form-grid">
+
+                {% csrf_token %}
+
+                <div class="dep-field {% if form.first_name.errors %}has-error{% endif %}">
+                    <label class="dep-label">نام</label>
+                    {{ form.first_name }}
+
+                    {% for error in form.first_name.errors %}
+                    <div class="dep-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="dep-field {% if form.last_name.errors %}has-error{% endif %}">
+                    <label class="dep-label">نام خانوادگی</label>
+                    {{ form.last_name }}
+
+                    {% for error in form.last_name.errors %}
+                    <div class="dep-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="dep-field {% if form.national_id.errors %}has-error{% endif %}">
+                    <label class="dep-label">کد ملی</label>
+                    {{ form.national_id }}
+
+                    {% for error in form.national_id.errors %}
+                    <div class="dep-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="dep-field {% if form.relation.errors %}has-error{% endif %}">
+                    <label class="dep-label">نسبت</label>
+                    {{ form.relation }}
+
+                    {% for error in form.relation.errors %}
+                    <div class="dep-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="dep-field {% if form.birthdate.errors %}has-error{% endif %}">
+                    <label class="dep-label">تاریخ تولد</label>
+                    {{ form.birthdate }}
+
+                    {% for error in form.birthdate.errors %}
+                    <div class="dep-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <button class="dep-submit">ثبت اطلاعات</button>
+
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block no_compress_js %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/persian-date@latest/dist/persian-date.min.js"></script>
+<script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        const $dateInput = $('#birthdate-picker');
+
+        if ($dateInput.length) {
+
+            const currentValue = $dateInput.val();
+
+            $dateInput.persianDatepicker({
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                initialValue: true,
+                initialValueType: 'persian',
+                calendar: {
+                    persian: {
+                        locale: 'fa'
+                    }
+                }
+            });
+
+            if (currentValue) {
+                $dateInput.val(currentValue);
+            }
+        }
+
+    });
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('#toast_container_nonfield .nf_toast_message').forEach((toast) => {
+
+        const closeBtn = toast.querySelector('.nf_toast_close');
+
+        closeBtn.onclick = () => {
+            toast.remove();
+        };
+
+        setTimeout(() => {
+            toast.remove();
+        }, 5000);
+
+    });
+</script>
+
+{% endblock %}

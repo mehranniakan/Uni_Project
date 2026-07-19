@@ -1,0 +1,187 @@
+<div class="mobile-sidebar" id="sidebar">
+
+    <nav class="mt-4 flex-1 overflow-y-auto">
+
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'profile' %}">
+
+            <!-- dashboard -->
+            <svg class="w-5 h-5 ml-2"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.5" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2V20a1 1 0 01-1 1h-3" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">پیشخوان</span>
+        </a>
+
+        {% if request.user.role == 'supervisor' %}
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'user_list' %}">
+
+            <!-- users management -->
+            <svg class="w-5 h-5 ml-2"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.5" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 18.72a8.94 8.94 0 00-6-2.22 8.94 8.94 0 00-6 2.22M15 11.25a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 00-2.25-2.25H18a2.25 2.25 0 00-2.25 2.25M6 12h-.75A2.25 2.25 0 003 14.25m3-3a2.25 2.25 0 002.25-2.25V9A2.25 2.25 0 006 6.75m12 4.5A2.25 2.25 0 0015.75 9V9A2.25 2.25 0 0118 6.75" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">مدیریت کاربران</span>
+        </a>
+        {% endif %}
+
+        {% if request.user.role == 'supervisor' %}
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'doctor-list' %}">
+
+            <!-- doctor -->
+            <svg class="w-5 h-5 ml-2" fill="none"
+                 stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 6.75a4.5 4.5 0 100 9 4.5 4.5 0 000-9zM9.75 18a6.75 6.75 0 0113.5 0M4.5 19.5h6" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">مدیریت پزشکان</span>
+        </a>
+        {% endif %}
+
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% if request.user.role == 'patient' %}{% url 'reservation_list_user' %}{% else %}{% url 'reservation_list_admin' %}{% endif %}">
+
+            <!-- history -->
+            <svg class="w-5 h-5 ml-2"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.5" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 6v6l4 2m6-3A10 10 0 1112 2a10 10 0 0110 10z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">نوبت های رزور شده</span>
+        </a>
+
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'schedule' %}">
+
+            <!-- calendar -->
+            <svg class="w-5 h-5 ml-2"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.5" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.75 3v2.25m10.5-2.25V5.25M3 8.25h18M4.5 8.25V19.5a1.5 1.5 0 001.5 1.5h12a1.5 1.5 0 001.5-1.5V8.25" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            {% if request.user.role == 'supervisor' %}
+            <span class="mr-1">مدیریت برنامه روزانه</span>
+            {% elif user.role == 'Reception' or user.role == 'patient' %}
+            <span class="mr-1">برنامه امروز درمانگاه</span>
+            {% endif %}
+        </a>
+
+        {% if request.user.role == 'supervisor' %}
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'insurance_list' %}">
+
+            <!-- insurance -->
+            <svg class="w-5 h-5 ml-2"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.5" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 9.75l7.5-6 7.5 6V19.5a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 19.5V9.75z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">مدیریت بیمه ها</span>
+        </a>
+        {% endif %}
+
+        {% if request.user.role == 'supervisor' %}
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'clinic_list' %}">
+
+            <!-- building -->
+            <svg class="w-5 h-5 ml-2" fill="none"
+                 stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 21h18M5 21V10l7-7 7 7v11M9 21v-6h6v6" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">مدیریت کلینیک ها</span>
+        </a>
+        {% endif %}
+
+        {% if request.user.role == 'supervisor' %}
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'news_list' %}">
+
+            <!-- news -->
+            <svg class="w-5 h-5 ml-2" fill="none"
+                 stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 4.5h15v12a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 16.5v-12zM8.25 6.75h7.5M8.25 11.25h7.5M8.25 15.75h4.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">مدیریت اخبار</span>
+        </a>
+        {% endif %}
+
+        {% if request.user.role == 'patient' %}
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'dependents_list' %}">
+
+            <!-- group -->
+            <svg class="w-5 h-5 ml-2"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.5" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 18.72a8.94 8.94 0 00-6-2.22 8.94 8.94 0 00-6 2.22M15 11.25a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">افراد تحت تکفل</span>
+        </a>
+        {% endif %}
+
+        {% if request.user.role == 'supervisor' or request.user.role == 'patient' %}
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'edit_account' pk=user.id %}">
+
+            <!-- user profile -->
+            <svg class="w-5 h-5 ml-2" fill="none"
+                 stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 6a4 4 0 110 8 4 4 0 010-8zM6 20a6 6 0 0112 0" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">جزئیات حساب کاربری</span>
+        </a>
+        {% endif %}
+
+
+        <a class="flex items-center py-4 px-8 hover:bg-stone-100 duration-300"
+           href="{% url 'logout' %}">
+
+            <!-- logout -->
+            <svg class="w-5 h-5 ml-2"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.5" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3
+                      0l3-3m0 0l-3-3m3 3H12" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+
+            <span class="mr-1">خروج</span>
+        </a>
+
+    </nav>
+</div>

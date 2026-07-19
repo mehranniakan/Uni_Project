@@ -1,0 +1,156 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+
+{% block title %}نوبت های رزرو شده{% endblock %}
+{% block header_title %}لیست نوبت های رزرو شده{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/reservation_list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="reservation-wrapper">
+
+    {% if reservations %}
+    <div class="reservation-grid">
+
+        {% for item in reservations %}
+        <div class="reservation-card">
+
+            <div class="card-header">
+                <div class="doctor">
+                    دکتر {{ item.schedule.doctor.first_name }} {{ item.schedule.doctor.last_name }}
+                </div>
+
+                <div class="status {{ item.status }}">
+                    {{ item.get_status_display }}
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <span class="label">کاربر:</span>
+                    <span class="value">{{ item.user.first_name }} {{ item.user.last_name }}</span>
+                </div>
+
+                <div class="row">
+                    <span class="label">کلینیک:</span>
+                    <span class="value">{{ item.schedule.doctor.doctor.clinic.name }}</span>
+                </div>
+
+                {% if item.sub_user %}
+                <div class="row">
+                    <span class="label">فرد تحت تکفل:</span>
+                    <span class="value">{{ item.sub_user.first_name }} {{ item.sub_user.last_name }}</span>
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <span class="label">تاریخ:</span>
+                    <span class="value">{{ item.schedule.schedule_date }}</span>
+                </div>
+
+                <div class="row">
+                    <span class="label">ساعت:</span>
+                    <span class="value">
+                            {{ item.schedule.start_time|time:"H:i" }}
+                            تا
+                            {{ item.schedule.end_time|time:"H:i" }}
+                        </span>
+                </div>
+
+            </div>
+
+            <div class="card-footer">
+
+                {% if item.status != 'closed' %} {# فقط اگر نوبت بسته نشده باشد دکمه نمایش داده شود #}
+                <button
+                        class="cancel-btn"
+                        data-id="{{ item.id }}"
+                        onclick="cancelReservation(this)"
+                >
+                    کنسل کردن
+                </button>
+                {% endif %}
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-banner">
+        <div class="empty-box">
+            <div class="empty-icon">📭</div>
+            <div class="empty-title">موردی برای نمایش وجود ندارد</div>
+            <div class="empty-text">در حال حاضر هیچ نوبتی در این بخش ثبت نشده است.</div>
+        </div>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+    function cancelReservation(btn) {
+        const reservationId = btn.dataset.id;
+
+        if (!confirm("آیا از لغو این نوبت مطمئن هستید؟ این عمل قابل بازگشت نیست.")) {
+            return; // اگر کاربر تایید نکرد، کاری انجام نده
+        }
+
+        // غیرفعال کردن دکمه برای جلوگیری از کلیک‌های متعدد
+        btn.disabled = true;
+        btn.textContent = 'در حال لغو...';
+        btn.classList.add('loading');
+
+        fetch(`/cancel-reservation/${reservationId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json" // بهتر است Content-Type را هم مشخص کنید
+            },
+            // می‌توانید اطلاعات بیشتری در body ارسال کنید اگر لازم بود، مثلاً دلیل لغو
+            body: JSON.stringify({})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    // اگر پاسخ موفقیت‌آمیز نبود (مثلاً 4xx یا 5xx)
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'خطای ناشناخته در سرور');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === "success") {
+                    alert(data.message || "نوبت با موفقیت لغو شد.");
+                    location.reload(); // رفرش صفحه برای به‌روزرسانی لیست
+                } else {
+                    // اگر سرور پاسخ موفقیت‌آمیز (200 OK) داد ولی status داخلی "error" بود
+                    alert(data.message || "خطا در لغو نوبت رخ داد.");
+                    btn.disabled = false;
+                    btn.textContent = 'کنسل کردن';
+                    btn.classList.remove('loading');
+                }
+            })
+            .catch(error => {
+                console.error("خطا در ارسال درخواست:", error);
+                alert("خطایی در ارتباط با سرور رخ داد: " + error.message);
+                btn.disabled = false;
+                btn.textContent = 'کنسل کردن';
+                btn.classList.remove('loading');
+            });
+    }
+</script>
+
+{% endblock %}

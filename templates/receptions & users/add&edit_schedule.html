@@ -1,0 +1,177 @@
+{% extends 'receptions & users/base_admin_panel.html' %}
+{% load static %}
+{% load compress %}
+{% load sweetify %}
+
+{% block title %}افزودن دکتر به برنامه{% endblock %}
+
+
+{% block no_compress_css %}
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+<link href="https://unpkg.com/persian-datepicker/dist/css/persian-datepicker.min.css" rel="stylesheet">
+{{ form.media.css }}
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/add_schedule.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% if form.non_field_errors %}
+<div id="toast_container_nonfield">
+    {% for error in form.non_field_errors %}
+    <div class="nf_toast_message">
+        <div class="nf_toast_text">{{ error }}</div>
+        <button class="nf_toast_close" type="button">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="form-card">
+
+    <div class="form-title">{{ view.title }}</div>
+    <div class="form-subtitle">
+        اطلاعات شیفت پزشک را وارد کنید
+    </div>
+
+    <form class="vertical-form" method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+        {% if field.name != "status" %}
+        <div class="input-group {% if field.errors %}has-error{% endif %}">
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% if field.errors %}
+            <div class="field-errors">
+                {% for error in field.errors %}
+                <span class="inline-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <div class="input-group {% if form.status.errors %}has-error{% endif %}">
+            <label for="id_status">وضعیت برنامه</label>
+
+            <select class="custom-select" id="id_status" name="status">
+                <option form.status.value==
+                        if value="Open" {%
+                "Open" %}selected{% endif %}>
+                فعال
+                </option>
+                <option form.status.value==
+                        if value="Cancelled" {%
+                "Cancelled" %}selected{% endif %}>
+                کنسل
+                </option>
+                <option form.status.value==
+                        if value="Closed" {%
+                "Closed" %}selected{% endif %}>
+                بسته
+                </option>
+            </select>
+
+            {% if form.status.errors %}
+            <div class="field-errors">
+                {% for error in form.status.errors %}
+                <span class="inline-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <button class="submit-btn">
+            {% if view.is_update %} ویرایش {% else %} افزودن {% endif %}
+        </button>
+
+    </form>
+
+
+</div>
+{% endblock %}
+
+{% block no_compress_js %}
+<!-- jQuery فقط یکبار -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Persian core -->
+<script src="https://unpkg.com/persian-date@latest/dist/persian-date.min.js"></script>
+
+<!-- Persian Datepicker -->
+<script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.min.js"></script>
+
+<!-- Flatpickr -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{ form.media.js }}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>$(function () {
+
+    const today = new persianDate().startOf('day');
+    const tomorrow = new persianDate().add('day', 1).startOf('day');
+
+    $("#birthdate-picker").persianDatepicker({
+        format: 'YYYY/MM/DD',
+        autoClose: true,
+        initialValue: false,
+        minDate: today,
+        maxDate: tomorrow,
+        calendar: {
+            persian: {
+                locale: 'fa'
+            }
+        }
+    });
+
+    flatpickr(".timepicker", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+
+});
+document.addEventListener("DOMContentLoaded", function () {
+    {%
+        if messages %
+    }
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',  // پایین سمت راست
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+        customClass: {
+            popup: 'rtl-toast'
+        },
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
+    {%
+        for message in messages %
+    }
+    Toast.fire({
+        icon: '{{ message.tags }}',
+        title: "{{ message|escapejs }}"
+    });
+    {%
+        endfor %
+    }
+    {%
+        endif %
+    }
+});
+</script>
+{% endblock %}
