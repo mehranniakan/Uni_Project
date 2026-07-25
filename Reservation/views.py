@@ -1,7 +1,6 @@
 import json
 
 from Komail_Django.tasks import check_pending_reservations
-from utils.redis_cache import RedisCacheManager
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin

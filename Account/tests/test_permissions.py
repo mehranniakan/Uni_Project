@@ -1,9 +1,6 @@
 import pytest
 from django.urls import reverse
 
-from test_fixtures import (patient_user,
-                           active_patient_profile,
-                           sub_user)
 
 
 @pytest.mark.django_db

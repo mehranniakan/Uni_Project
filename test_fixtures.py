@@ -1,7 +1,6 @@
 # conftest.py
 from django.core.cache import cache
 import random
-from django.db.models import Q
 from faker import Faker
 import pytest
 from datetime import date, time
@@ -9,7 +8,6 @@ from Account.models import (User,
                             Patient,
                             Doctor,
                             Reception,
-                            Supervisor,
                             SubUser)
 from Clinic.models import Clinics
 from Receptions.models import Insurances

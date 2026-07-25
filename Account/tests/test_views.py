@@ -1,14 +1,7 @@
 import pytest
-from django.contrib.auth import get_user_model
-from django.contrib.messages import get_messages
-from django.core.cache import cache
 from django.urls import reverse
 
 from Account.models import SubUser
-from test_fixtures import (patient_user,
-                           clear_cache_and_db_cleaner,
-                           sub_user,
-                           active_patient_profile)
 
 
 @pytest.mark.django_db

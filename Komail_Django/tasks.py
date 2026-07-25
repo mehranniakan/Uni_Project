@@ -1,5 +1,4 @@
 from celery import shared_task
-from django.core.cache import cache
 from utils.redis_cache import RedisCacheManager
 from Account.models import User
 from Reservation.models import Reservation

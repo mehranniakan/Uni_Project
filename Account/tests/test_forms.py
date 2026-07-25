@@ -1,9 +1,6 @@
-from faker import Faker
 import pytest
 
-from Account import forms
 from Account.forms import CustomSignupForm, SubUserForm, CustomLoginForm, EditAccount
-from test_fixtures import patient_user, patient_user_disable, active_patient_profile, sub_user
 
 @pytest.mark.django_db
 class TestAccountForms:

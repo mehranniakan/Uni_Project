@@ -1,17 +1,16 @@
 # utils/redis_cache.py
 
+import json
+import logging
+from typing import Any, Optional, List, Dict
+
 from django.core.cache import cache
 from django_redis import get_redis_connection
-import json
-import pickle
-from typing import Any, Optional, List, Dict
-import logging
 
 logger = logging.getLogger(__name__)
 
 
 class RedisCacheManager:
-
 
     def __init__(self, alias='default'):
         self.alias = alias
@@ -91,8 +90,6 @@ class RedisCacheManager:
         self.set(key, value, timeout)
         return value
 
-
-
     def increment(self, key: str, amount: int = 1) -> Optional[int]:
         """Increase numeric Value"""
         try:
@@ -108,8 +105,6 @@ class RedisCacheManager:
         except Exception as e:
             logger.error(f"❌ Decrement error: {e}")
             return None
-
-
 
     def set_hash(self, key: str, field: str, value: Any) -> bool:
         """Set hash"""

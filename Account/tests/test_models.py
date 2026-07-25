@@ -5,12 +5,6 @@ from faker import Faker
 from Account.models import User, Patient, Doctor, Reception, Supervisor, SubUser
 from Clinic.models import DoctorServices
 from Receptions.models import Insurances
-from test_fixtures import (patient_user,
-                           doctor_user,
-                           active_patient_profile,
-                           reception_user,
-                           supervisor_user,
-                           clinic_normal)
 
 faker = Faker(["fa_IR"])
 
