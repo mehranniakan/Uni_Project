@@ -149,6 +149,32 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
+# ------------------------------------------------------------------------------
+# Redis Cache
+# ------------------------------------------------------------------------------
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',
+
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PASSWORD': '',
+            'SOCKET_CONNECT_TIMEOUT': 5,
+            'SOCKET_TIMEOUT': 5,
+            'RETRY_ON_TIMEOUT': True,
+            'MAX_CONNECTIONS': 1000,
+            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+        }
+    }
+}
+
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 60 * 15
+CACHE_MIDDLEWARE_KEY_PREFIX = 'myapp'
+
 
 # ------------------------------------------------------------------------------
 # TEMPLATES
@@ -171,9 +197,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                "Komail_Django.context_processors."
-                "reservations_count",
+                "Komail_Django.context_processors.reservations_count"
             ],
         },
     },

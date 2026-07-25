@@ -18,13 +18,12 @@ class NationalCodeBackend(ModelBackend):
             # جستجو با کدملی
             user = usermodel.objects.get(username=username)
         except usermodel.DoesNotExist:
-            try:
-                # یا جستجو با ایمیل (اختیاری)
-                user = usermodel.objects.get(email=username)
-            except usermodel.DoesNotExist:
-                return None
+            return None
+
+
 
         if user.check_password(password) and self.user_can_authenticate(user):
             return user
 
         return None
+    

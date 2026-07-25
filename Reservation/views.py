@@ -1,5 +1,7 @@
 import json
 
+from Komail_Django.tasks import check_pending_reservations
+from utils.redis_cache import RedisCacheManager
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -72,6 +74,14 @@ class ReservationAdminListView(LoginRequiredMixin, ListView):
             queryset=reservations,
         )
         return filter_set.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_query'] = self.request.GET.get('q', '')
+        context['q'] = self.request.GET.get('q', '')
+        context['status'] = self.request.GET.get('status', '')
+        return context
+
 
 
 @method_decorator(user_passes_test(user_only), name="dispatch")
@@ -218,11 +228,16 @@ def set_reservation(request):
 @user_passes_test(supervisor_or_reception)
 def reservation_apply(request):
     if request.method == "POST":
+
         if request.POST.get("pk"):
+
             reservation = get_object_or_404(Reservation, pk=request.POST.get("pk"))
             reservation.status = "answered"
             reservation.reception = request.user
             reservation.save()
+
+            check_pending_reservations.delay(request.user.id)
+
             messages.success(request, "نوبت مورد نظر با موفقیت تکمیل شد !")
 
             return redirect("reservation_list_admin")

@@ -4186,3 +4186,35 @@ html:has(.drawer-toggle:checked) {
 .mobile-sidebar {
     display: block;
 }
+
+@keyframes notification-wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+
+    15% {
+        transform: rotate(-12deg);
+    }
+
+    30% {
+        transform: rotate(10deg);
+    }
+
+    45% {
+        transform: rotate(-8deg);
+    }
+
+    60% {
+        transform: rotate(6deg);
+    }
+
+    75% {
+        transform: rotate(-4deg);
+    }
+}
+
+.notification-wiggle {
+    animation: notification-wiggle 0.8s ease-in-out infinite;
+    transform-origin: center bottom;
+    display: inline-block;
+}

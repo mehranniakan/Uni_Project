@@ -40,23 +40,28 @@
 
         <div class="toolbar">
             <div class="tabs">
-                <a class="tab-link {% if status_filter == 'pending' or not status_filter %}active{% endif %}"
+                <a class="tab-link {% if status == 'all' or not status %}active{% endif %}"
+                   href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}status=all">
+                    همه
+                </a>
+                <a class="tab-link {% if status == 'pending' %}active{% endif %}"
                    href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}status=pending">
                     در دست اقدام
                 </a>
 
-                <a class="tab-link {% if status_filter == 'answered' %}active{% endif %}"
+                <a class="tab-link {% if status == 'answered' %}active{% endif %}"
                    href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}status=answered">
                     انجام شده
                 </a>
-                <a class="tab-link {% if status_filter == 'cancelled' %}active{% endif %}"
+                <a class="tab-link {% if status == 'cancelled' %}active{% endif %}"
                    href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}status=cancelled">
                     کنسل شده
                 </a>
             </div>
 
             <form action="{% url 'reservation_list_admin' %}" class="search-form" method="get">
-                <input name="status" type="hidden" value="{{ status_filter|default:'pending' }}">
+                <input name="status" type="hidden" value="{{ request.GET.status }}">
+
                 <div class="search-box">
                     <input name="q"
                            placeholder="جستجو بر اساس کدملی، پزشک..."
@@ -73,7 +78,7 @@
     </div>
 
     <div class="content-card">
-        {% if page_obj.object_list %}
+        {% if reservations %}
         <!-- Desktop Table -->
         <div class="table-wrap">
             <table>
@@ -89,14 +94,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in page_obj %}
+                {% for item in reservations %}
                 <tr>
                     <td>
                         <div class="person-name">{{ item.user.first_name }} {{ item.user.last_name }}</div>
                         <div class="sub-text">
-                            {% if item.user.mobile_number %}{{ item.user.mobile_number }}{% else %}شماره
-                            تماس ثبت
-                            نشده{% endif %}
+                            {% if item.user.mobile_number %}
+                            {{ item.user.mobile_number }}
+                            {% else %}
+                            شماره تماس ثبت نشده
+                            {% endif %}
                         </div>
                     </td>
                     <td>{{ item.user.username }}</td>
@@ -109,8 +116,9 @@
                     </td>
                     <td>
                         <div class="person-name"
-                             style="font-size:14px;">{{ item.schedule.doctor.first_name }} {{
-                            item.schedule.doctor.last_name }}
+                             style="font-size:14px;">{{ item.schedule.doctor.first_name }} {{item.schedule.doctor.last_name }}
+
+
                         </div>
                         <div class="sub-text">
                             {{ item.schedule.schedule_date|jformat:"%Y/%m/%d" }}
@@ -191,8 +199,9 @@
 
                                 <div class="detail-item">
                                     <div class="detail-label">مشخصات برنامه</div>
-                                    <div class="detail-value">{{ item.schedule.doctor.first_name }} {{
-                                        item.schedule.doctor.last_name }}
+                                    <div class="detail-value">{{ item.schedule.doctor.first_name }} {{ item.schedule.doctor.last_name }}
+
+
                                     </div>
                                 </div>
 
@@ -267,8 +276,8 @@
 
                     <div class="meta-item">
                         <div class="meta-label">مشخصات برنامه</div>
-                        <div class="meta-value">{{ item.schedule.doctor.first_name }} {{ item.schedule.doctor.last_name
-                            }}
+                        <div class="meta-value">{{ item.schedule.doctor.first_name }} {{ item.schedule.doctor.last_name }}
+
                         </div>
                     </div>
 

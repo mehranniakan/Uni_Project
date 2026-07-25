@@ -5,15 +5,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, FormView, ListView
-
+from django_ratelimit.decorators import ratelimit
 from Account.forms import CustomSignupForm, CustomLoginForm, EditAccount, SubUserForm
 from Account.models import User, SubUser
+from django.utils.decorators import method_decorator
 
 
 def forgot_password(request):
     return render(request, "lost-password.html")
 
 
+@method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True), name='dispatch')
+@method_decorator(ratelimit(key='ip', rate='100/m', method='GET', block=True), name='dispatch')
 class LoginView(FormView):
     form_class = CustomLoginForm
     template_name = "account/login.html"
@@ -26,6 +29,8 @@ class LoginView(FormView):
         return super().form_valid(form)
 
 
+@method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True), name='dispatch')
+@method_decorator(ratelimit(key='ip', rate='100/m', method='GET', block=True), name='dispatch')
 class SignupView(FormView):
     form_class = CustomSignupForm
     template_name = "account/sign_up.html"
@@ -38,18 +43,23 @@ class SignupView(FormView):
         return super().form_valid(form)
 
 
-class SubUserListView(ListView, LoginRequiredMixin):
+@method_decorator(ratelimit(key='ip', rate='100/m', method='GET', block=True), name='dispatch')
+class SubUserListView(LoginRequiredMixin, ListView):
     model = SubUser
     template_name = "account/dependents.html"
+    http_method_names = ["get"]
     context_object_name = "subs"
 
     def get_queryset(self):
         return SubUser.objects.filter(user=self.request.user.patient)
 
 
-class AdminUserUpdateView(UpdateView, LoginRequiredMixin):
+@method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True), name='dispatch')
+@method_decorator(ratelimit(key='ip', rate='100/m', method='GET', block=True), name='dispatch')
+class AdminUserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = EditAccount
+    http_method_names = ["get", "post"]
     template_name = "account/edit_account.html"
     success_url = reverse_lazy("profile")
 
@@ -61,9 +71,12 @@ class AdminUserUpdateView(UpdateView, LoginRequiredMixin):
         return super().form_invalid(form)
 
 
-class SubUserUpdateView(UpdateView, LoginRequiredMixin):
+@method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True), name='dispatch')
+@method_decorator(ratelimit(key='ip', rate='100/m', method='GET', block=True), name='dispatch')
+class SubUserUpdateView(LoginRequiredMixin, UpdateView):
     model = SubUser
     form_class = SubUserForm
+    http_method_names = ["get", "post"]
     template_name = "account/add&edit_dependent.html"
     success_url = reverse_lazy("dependents_list")
 
@@ -81,7 +94,9 @@ class SubUserUpdateView(UpdateView, LoginRequiredMixin):
         return super().form_invalid(form)
 
 
-class SubUserCreateView(CreateView, LoginRequiredMixin):
+@method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True), name='dispatch')
+@method_decorator(ratelimit(key='ip', rate='100/m', method='GET', block=True), name='dispatch')
+class SubUserCreateView(LoginRequiredMixin, CreateView):
     model = SubUser
     form_class = SubUserForm
     template_name = "account/add&edit_dependent.html"

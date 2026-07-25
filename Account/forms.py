@@ -100,20 +100,17 @@ class CustomSignupForm(forms.ModelForm):
     def clean_birthdate(self):
         birthdate = self.cleaned_data.get("birthdate")
 
-        birthdate = birthdate.split("/")
-        if (
-            JalaliDate(int(birthdate[0]), int(birthdate[1]), int(birthdate[2]))
-            < JalaliDate.today()
-        ):
-            try:
-                birthdate = JalaliDate(
-                    int(birthdate[0]), int(birthdate[1]), int(birthdate[2])
-                ).to_gregorian()
-                return birthdate
-            except ValueError:
+        try:
+            y, m, d = map(int, birthdate.split("/"))
+            jdate = JalaliDate(y, m, d)
+
+            if jdate >= JalaliDate.today():
                 raise ValidationError("تاریخ معتبر نیست")
-        else:
-            raise ValidationError("تاریخ معتبر نیست")
+
+            return jdate.to_gregorian()
+
+        except Exception:
+            raise ValidationError("فرمت تاریخ صحیح نیست")
 
     def clean_password1(self):
         password1 = self.cleaned_data.get("password1")
@@ -207,6 +204,7 @@ class CustomLoginForm(forms.Form):
 
         if username and password:
             user = authenticate(username=username, password=password)
+
 
             if user is None:
                 raise ValidationError("نام کاربری یا رمز عبور اشتباه می باشد !")
@@ -433,6 +431,9 @@ class SubUserForm(forms.ModelForm):
         cleaned_data = super().clean()
 
         nat_id = cleaned_data.get("national_id")
+
+        if self.patient and not self.patient.user.is_active:
+            raise ValidationError("اکانت شما غیرفعال می باشد !")
 
         if self.Action == "Edit":
             if self.instance.national_id != nat_id:

@@ -57,7 +57,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     http_method_names = ["get"]
 
     def get(self, request, *args, **kwargs):
-        check_pending_reservations.delay(request.user.id)
+        check_pending_reservations(request.user.id) 
         return super().get(request, *args, **kwargs)
 
 
@@ -422,6 +422,7 @@ def close_schedule(request):
         if Schedule.objects.filter(status="Open").exists():
             try:
                 Schedule.objects.filter(status="Open").update(status="Closed")
+
                 messages.success(request, "برنامه با موفقیت بسته شد !")
                 return render(request, "schedule_account.html")
             except Exception:
@@ -456,6 +457,8 @@ def cancel_schedule(request):
                     Reservation.objects.filter(schedule__id=check_id.id).update(
                         status="cancelled", reception=request.user
                     )
+
+                    check_pending_reservations.delay(request.user.id)
 
                     messages.success(request, "برنامه مورد نظر با موفقیت کنسل شد !")
                     return redirect("schedule")

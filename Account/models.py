@@ -1,5 +1,5 @@
 import uuid
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
@@ -270,7 +270,13 @@ class Doctor(models.Model):
 
     description = CKEditor5Field("Biography", config_name="default")
 
-    pt_cap = models.PositiveIntegerField(default=10, verbose_name="ظرفیت بیمار در روز")
+    pt_cap = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(999)
+        ],
+        default=10,
+        verbose_name="ظرفیت بیمار در روز")
 
     status = models.CharField(
         max_length=10,
