@@ -1,5 +1,9 @@
 import pytest
 from django.urls import reverse
+from test_fixtures import (active_patient_profile,
+                           patient_user,
+                           sub_user,
+                           patient_user_disable)
 
 
 
@@ -11,6 +15,13 @@ class TestAccountPermissions:
     profile_url = reverse("profile")
     sub_user_url = reverse("dependents_list")
     add_sub_user_url = reverse("add_dependents")
+
+    def test_profile_disable_account(self,client,patient_user_disable):
+        client.force_login(patient_user_disable)
+        response = client.get(self.profile_url)
+        assert response.status_code == 302
+        assert "login" in response.url
+
 
     def test_profile_without_login(self, client):
         response = client.get(self.profile_url)
